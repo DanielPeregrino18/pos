@@ -14,6 +14,7 @@ class _FormLoginState extends State<FormLogin> {
   Widget build(BuildContext context) {
     var theme = Theme.of(context).colorScheme;
     return Form(
+        key: _formKey,
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 50),
           child: Column(

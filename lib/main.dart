@@ -1,8 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:pos/config/ObjectboxConnection.dart';
+import 'package:pos/objectbox.g.dart';
 import 'package:pos/routes/routes.dart';
 
-void main() {
-  runApp(const MyApp());
+late ObjectboxConnection objectbox;
+
+Future<void> main() async {
+  // This is required so ObjectBox can get the application directory
+  // to store the database in.
+  WidgetsFlutterBinding.ensureInitialized();
+
+  objectbox = await ObjectboxConnection.create();
+
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
