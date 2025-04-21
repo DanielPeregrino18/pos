@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pos/config/ObjectboxConnection.dart';
 import 'package:pos/objectbox.g.dart';
 import 'package:pos/routes/routes.dart';
@@ -12,7 +13,7 @@ Future<void> main() async {
 
   objectbox = await ObjectboxConnection.create();
 
-  runApp(MyApp());
+  runApp(ProviderScope(child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {

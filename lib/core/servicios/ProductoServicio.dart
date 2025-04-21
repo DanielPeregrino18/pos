@@ -1,12 +1,12 @@
 
 
-import 'package:pos/data/repositorios/ProductoRepositorio.dart';
+import 'package:pos/data/repositorios/ProductoDAOObjectboxImpl.dart';
 
 import '../../data/modelos/producto.dart';
 
 class ProductoServicio{
 
-  ProductoRepositorio productoRepositorio = ProductoRepositorio();
+  ProductoDAOObjectboxImpl productoRepositorio = ProductoDAOObjectboxImpl();
 
   List<Producto> getAllProductos(){
     return productoRepositorio.getAllProductos();

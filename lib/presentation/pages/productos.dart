@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pos/core/servicios/ProductoServicio.dart';
 import 'package:pos/data/modelos/producto.dart';
+import 'package:pos/presentation/viewmodels/background_dismissible.dart';
 import 'package:pos/presentation/widgets/drawer_pos.dart';
 
 class Productos extends StatefulWidget {
@@ -137,7 +138,7 @@ class _ProductosState extends State<Productos> {
               itemBuilder: (context, index) {
                 return Dismissible(
                   key: UniqueKey(),
-                  background: backgroundCard(),
+                  background: BackgroundDismissible(),
                   onDismissed: (direction) {
                     int idDelete = productosVenta!.indexWhere(
                       (prod) => prod.id == productosFiltrados[index].id,
@@ -154,26 +155,6 @@ class _ProductosState extends State<Productos> {
                 );
               },
             ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Container backgroundCard() {
-    return Container(
-      margin: EdgeInsets.symmetric(vertical: 4),
-      color: Colors.red,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(left: 5),
-            child: Icon(Icons.delete),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(right: 5),
-            child: Icon(Icons.delete),
           ),
         ],
       ),
@@ -222,7 +203,7 @@ class _ProductosState extends State<Productos> {
                   child: SizedBox(
                     width: MediaQuery.of(context).size.width * 0.25,
                     child: Text(
-                      "${format(productosFiltrados[index].precio!)}\$",
+                      "\$${format(productosFiltrados[index].precio!)}",
                       style: TextStyle(color: theme.onPrimary, fontSize: 30),
                     ),
                   ),
