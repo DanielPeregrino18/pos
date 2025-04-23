@@ -3,44 +3,45 @@ import 'dart:async';
 import 'package:after_layout/after_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pos/core/servicios/ProductoServicio.dart';
+import 'package:pos/presentation/viewmodels/ProductosViewModel.dart';
 
 import '../../data/modelos/producto.dart';
 
-class UpdateProducto extends StatefulWidget {
+class UpdateProducto extends ConsumerStatefulWidget {
   final String? id;
   const UpdateProducto({super.key, this.id});
 
   @override
-  _UpdateProductoState createState() => _UpdateProductoState();
+  ConsumerState<UpdateProducto> createState() => _UpdateProductoState();
 }
 
-class _UpdateProductoState extends State<UpdateProducto>
-    with AfterLayoutMixin<UpdateProducto> {
-  Producto? producto;
+class _UpdateProductoState extends ConsumerState<UpdateProducto> {
   final _formKey = GlobalKey<FormState>();
-  late final TextEditingController _nombre;
-  late final TextEditingController _precio;
-  late final TextEditingController _stock;
+  TextEditingController? _nombre;
+  TextEditingController? _precio;
+  TextEditingController? _stock;
+
   @override
   void initState() {
     super.initState();
-    ProductoServicio productoServicio = ProductoServicio();
-    try {
-      producto = productoServicio.getProductoById(int.parse(widget.id!));
-    } catch (e) {
-      producto = Producto("", 0.0, 0);
-    }
-    _nombre = TextEditingController(text: producto!.nombre);
-    _precio = TextEditingController(text: "${producto!.precio}");
-    _stock = TextEditingController(text: "${producto!.stock}");
+    ref.read(productosVMProvider).getProductoActualizando(widget.id!);
+    _nombre = TextEditingController(
+      text: ref.read(productosVMProvider).productoActualizando!.nombre!,
+    );
+    _precio = TextEditingController(
+      text: "${ref.read(productosVMProvider).productoActualizando!.precio}",
+    );
+    _stock = TextEditingController(
+      text: "${ref.read(productosVMProvider).productoActualizando!.stock}",
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context).colorScheme;
-
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -54,8 +55,8 @@ class _UpdateProductoState extends State<UpdateProducto>
         backgroundColor: theme.primary,
         leading: IconButton(
           onPressed: () {
-              context.pop();
-              context.push("/productos");
+            context.pop();
+            context.push("/productos");
           },
           icon: Icon(Icons.arrow_back),
         ),
@@ -150,10 +151,21 @@ class _UpdateProductoState extends State<UpdateProducto>
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
                     _formKey.currentState!.save();
-                    _agregarProducto(
-                      _nombre.text,
-                      double.parse(_precio.text),
-                      int.parse(_stock.text),
+                    bool res = ref
+                        .read(productosVMProvider)
+                        .actualizarProducto(
+                          _nombre!.text,
+                          _precio!.text,
+                          _stock!.text,
+                        );
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(
+                          res
+                              ? "Se actualizo el produto ${ref.read(productosVMProvider).productoActualizando!.nombre}"
+                              : "No se pudo actualizar el producto",
+                        ),
+                      ),
                     );
                   }
                 },
@@ -167,32 +179,6 @@ class _UpdateProductoState extends State<UpdateProducto>
               ),
             ],
           ),
-        ),
-      ),
-    );
-  }
-
-  @override
-  FutureOr<void> afterFirstLayout(BuildContext context) {
-    if (producto!.precio == 0.0) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text("No se encontro el producto.")));
-    }
-  }
-
-  void _agregarProducto(String nombre, double precio, int stock) {
-    ProductoServicio productoServicio = ProductoServicio();
-    producto!.nombre = nombre;
-    producto!.precio = precio;
-    producto!.stock = stock;
-    bool res = productoServicio.updateProducto(producto!);
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(
-          res
-              ? "Se actualizo el produto $nombre"
-              : "No se pudo actualizar el producto",
         ),
       ),
     );

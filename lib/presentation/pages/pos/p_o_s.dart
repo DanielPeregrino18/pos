@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:numberpicker/numberpicker.dart';
+import 'package:pos/presentation/pages/pos/widgets/realizar_venta.dart';
+import 'package:pos/presentation/pages/productos.dart';
 import 'package:pos/presentation/viewmodels/PosViewModel.dart';
-import 'package:pos/presentation/viewmodels/background_dismissible.dart';
+import 'package:pos/presentation/widgets/background_dismissible.dart';
 import 'package:pos/presentation/widgets/drawer_pos.dart';
 
 class POS extends ConsumerStatefulWidget {
@@ -151,7 +153,11 @@ class _POSState extends ConsumerState<POS> {
                                     ),
                                     TextButton(
                                       onPressed: () {
-                                        carritoRef.setCantidad(index, currentValue);
+                                        carritoRef.setCantidad(
+                                          index,
+                                          currentValue,
+                                        );
+                                        context.pop();
                                       },
                                       child: Text("Aceptar"),
                                     ),
@@ -176,6 +182,13 @@ class _POSState extends ConsumerState<POS> {
                                           fontSize: 30,
                                           fontWeight: FontWeight.w600,
                                         ),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: Text(
+                                        "Precio: \$${carritoRef.carrito[index]['producto'].precio.toStringAsFixed(2)}",
+                                        style: TextStyle(fontSize: 20),
+                                        textAlign: TextAlign.center,
                                       ),
                                     ),
                                     Expanded(
@@ -232,7 +245,17 @@ class _POSState extends ConsumerState<POS> {
               ),
               FloatingActionButton.large(
                 heroTag: "btn2",
-                onPressed: () {},
+                onPressed: () {
+                  if(ref.read(carritoProvider).carrito.isNotEmpty) {
+                    showDialog(
+                      barrierDismissible: false,
+                      context: context,
+                      builder: (context) {
+                        return RealizarVenta();
+                      },
+                    );
+                  }
+                },
                 child: Icon(Icons.attach_money),
               ),
             ],
@@ -251,9 +274,6 @@ class _POSState extends ConsumerState<POS> {
       centerTitle: true,
       iconTheme: IconThemeData(color: theme.onPrimary),
       backgroundColor: theme.primary,
-      actions: <Widget>[
-        IconButton(onPressed: () {}, icon: Icon(Icons.add, size: 40)),
-      ],
     );
   }
 }

@@ -1,53 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pos/core/servicios/ProductoServicio.dart';
 import 'package:pos/data/modelos/producto.dart';
-import 'package:pos/presentation/viewmodels/background_dismissible.dart';
+import 'package:pos/presentation/viewmodels/ProductosViewModel.dart';
+import 'package:pos/presentation/widgets/background_dismissible.dart';
 import 'package:pos/presentation/widgets/drawer_pos.dart';
 
-class Productos extends StatefulWidget {
+class Productos extends ConsumerStatefulWidget {
   const Productos({Key? key}) : super(key: key);
 
   @override
-  _ProductosState createState() => _ProductosState();
+  ConsumerState<Productos> createState() => _ProductosState();
 }
 
-class _ProductosState extends State<Productos> {
-  List<Producto>? productosVenta;
-  int num = 0;
-  ProductoServicio? productoServicio;
-  List<Producto> productosFiltrados = [];
+class _ProductosState extends ConsumerState<Productos> {
 
   @override
   void initState() {
-    productoServicio = ProductoServicio();
-    productosVenta = productoServicio!.getAllProductos();
-    setState(() {
-      productosFiltrados = productosVenta!;
-    });
     super.initState();
+    ref.read(productosVMProvider).getAllProductos();
   }
 
   @override
   Widget build(BuildContext context) {
-    var theme = Theme.of(context).colorScheme;
-
-    void filtro(String value) {
-      setState(() {
-        if (value.isEmpty) {
-          productosFiltrados = productosVenta!;
-        } else {
-          productosFiltrados =
-              productosVenta!
-                  .where(
-                    (prod) => prod.nombre!.toLowerCase().contains(
-                      value.toLowerCase(),
-                    ),
-                  )
-                  .toList();
-        }
-      });
-    }
+    var theme = Theme
+        .of(context)
+        .colorScheme;
 
     return Scaffold(
       appBar: AppBar(
@@ -62,7 +41,6 @@ class _ProductosState extends State<Productos> {
           IconButton(onPressed: () {
             Navigator.pop(context);
             context.go("/productos/addproducto");
-
           }, icon: Icon(Icons.add, size: 40)),
         ],
       ),
@@ -80,7 +58,7 @@ class _ProductosState extends State<Productos> {
               labelStyle: TextStyle(color: theme.primary),
             ),
             onChanged: (value) {
-              filtro(value);
+              ref.read(productosVMProvider).filtrarProductos(value);
             },
           ),
           Container(
@@ -89,12 +67,17 @@ class _ProductosState extends State<Productos> {
                 Expanded(
                   flex: 1,
                   child: SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.25,
+                    width: MediaQuery
+                        .of(context)
+                        .size
+                        .width * 0.25,
                     child: Padding(
                       padding: const EdgeInsets.only(left: 4),
                       child: Text(
                         "ID Producto",
-                        style: TextStyle(color: theme.primary, fontSize: 30, fontWeight: FontWeight.w600),
+                        style: TextStyle(color: theme.primary,
+                            fontSize: 30,
+                            fontWeight: FontWeight.w600),
                       ),
                     ),
                   ),
@@ -102,30 +85,45 @@ class _ProductosState extends State<Productos> {
                 Expanded(
                   flex: 1,
                   child: SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.25,
+                    width: MediaQuery
+                        .of(context)
+                        .size
+                        .width * 0.25,
                     child: Text(
                       "Nombre",
-                      style: TextStyle(color: theme.primary, fontSize: 30, fontWeight: FontWeight.w600),
+                      style: TextStyle(color: theme.primary,
+                          fontSize: 30,
+                          fontWeight: FontWeight.w600),
                     ),
                   ),
                 ),
                 Expanded(
                   flex: 1,
                   child: SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.25,
+                    width: MediaQuery
+                        .of(context)
+                        .size
+                        .width * 0.25,
                     child: Text(
                       "Precio",
-                      style: TextStyle(color: theme.primary, fontSize: 30, fontWeight: FontWeight.w600),
+                      style: TextStyle(color: theme.primary,
+                          fontSize: 30,
+                          fontWeight: FontWeight.w600),
                     ),
                   ),
                 ),
                 Expanded(
                   flex: 1,
                   child: SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.25,
+                    width: MediaQuery
+                        .of(context)
+                        .size
+                        .width * 0.25,
                     child: Text(
                       "Existencias",
-                      style: TextStyle(color: theme.primary, fontSize: 30, fontWeight: FontWeight.w600),
+                      style: TextStyle(color: theme.primary,
+                          fontSize: 30,
+                          fontWeight: FontWeight.w600),
                     ),
                   ),
                 ),
@@ -134,22 +132,22 @@ class _ProductosState extends State<Productos> {
           ),
           Expanded(
             child: ListView.builder(
-              itemCount: productosFiltrados.length,
+              itemCount: ref
+                  .watch(productosVMProvider)
+                  .productosFiltrados
+                  .length,
               itemBuilder: (context, index) {
                 return Dismissible(
                   key: UniqueKey(),
                   background: BackgroundDismissible(),
                   onDismissed: (direction) {
-                    int idDelete = productosVenta!.indexWhere(
-                      (prod) => prod.id == productosFiltrados[index].id,
+                    bool res = ref.read(productosVMProvider).eliminarProducto(
+                        index);
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text(res
+                          ? "Se elimino el produto correctamete"
+                          : "No se pudo elimina el producto")),
                     );
-                    setState(() {
-                      _eliminarProducto(productosFiltrados[index].id, productosFiltrados[index].nombre!);
-                      productosVenta!.removeAt(idDelete);
-                      if(productosVenta != productosFiltrados){
-                        productosFiltrados.removeAt(index);
-                      }
-                    });
                   },
                   child: cardProducto(theme, index),
                 );
@@ -162,6 +160,10 @@ class _ProductosState extends State<Productos> {
   }
 
   Widget cardProducto(ColorScheme theme, int index) {
+    var productosFiltrados = ref
+        .read(productosVMProvider)
+        .productosFiltrados;
+
     return GestureDetector(
       onTap: () {
         context.go("/productos/updateProducto/${productosFiltrados[index].id}");
@@ -180,7 +182,10 @@ class _ProductosState extends State<Productos> {
                   child: Padding(
                     padding: const EdgeInsets.only(left: 10),
                     child: SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.25,
+                      width: MediaQuery
+                          .of(context)
+                          .size
+                          .width * 0.25,
                       child: Text(
                         "${productosFiltrados[index].id}",
                         style: TextStyle(color: theme.onPrimary, fontSize: 30),
@@ -191,7 +196,10 @@ class _ProductosState extends State<Productos> {
                 Expanded(
                   flex: 1,
                   child: SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.25,
+                    width: MediaQuery
+                        .of(context)
+                        .size
+                        .width * 0.25,
                     child: Text(
                       "${productosFiltrados[index].nombre}",
                       style: TextStyle(color: theme.onPrimary, fontSize: 30),
@@ -201,9 +209,12 @@ class _ProductosState extends State<Productos> {
                 Expanded(
                   flex: 1,
                   child: SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.25,
+                    width: MediaQuery
+                        .of(context)
+                        .size
+                        .width * 0.25,
                     child: Text(
-                      "\$${format(productosFiltrados[index].precio!)}",
+                      "\$${productosFiltrados[index].precio!.toStringAsFixed(2)}",
                       style: TextStyle(color: theme.onPrimary, fontSize: 30),
                     ),
                   ),
@@ -211,7 +222,10 @@ class _ProductosState extends State<Productos> {
                 Expanded(
                   flex: 1,
                   child: SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.25,
+                    width: MediaQuery
+                        .of(context)
+                        .size
+                        .width * 0.25,
                     child: Padding(
                       padding: const EdgeInsets.only(left: 15),
                       child: Text(
@@ -228,16 +242,6 @@ class _ProductosState extends State<Productos> {
       ),
     );
   }
-
-  void _eliminarProducto(int id, String nombre) {
-    ProductoServicio productoServicio = ProductoServicio();
-    bool res = productoServicio.eliminarProducto(id);
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(res ? "Se elimino el produto $nombre":"No se pudo elimina el producto")),
-    );
-  }
 }
+//n.toStringAsFixed(2);
 
-String format(double n) {
-  return n.toStringAsFixed(n.truncateToDouble() == n ? 0 : 2);
-}

@@ -1,20 +1,24 @@
 
 
-import 'package:pos/data/repositorios/ProductoDAOObjectboxImpl.dart';
+import 'package:pos/core/dao/ProductoDAO.dart';
 
 import '../../data/modelos/producto.dart';
 
 class ProductoServicio{
 
-  ProductoDAOObjectboxImpl productoRepositorio = ProductoDAOObjectboxImpl();
+  final ProductoDao productoRepositorio;
+
+  ProductoServicio(this.productoRepositorio);
 
   List<Producto> getAllProductos(){
     return productoRepositorio.getAllProductos();
   }
 
-  //falta agregar validacion, si ya existe el nombre
   bool agregarProducto(String nombre, double precio, int stock){
     Producto producto = Producto(nombre, precio, stock);
+    if(productoRepositorio.existeProductoPorNombre(nombre).isNotEmpty){
+      return false;
+    }
     return productoRepositorio.agregarProducto(producto);
   }
 
@@ -27,11 +31,17 @@ class ProductoServicio{
     if(producto != null){
       return producto;
     }else{
-      throw Exception("No se encoontro el producto");
+      throw Exception("No se encontro el producto");
     }
   }
 
   bool updateProducto(Producto producto){
+    List<Producto> productoPorNombre = productoRepositorio.existeProductoPorNombre(producto.nombre!);
+    if(productoPorNombre.isNotEmpty){
+      if(productoPorNombre[0].id != producto.id){
+        return false;
+      }
+    }
     return productoRepositorio.agregarProducto(producto);
   }
 }

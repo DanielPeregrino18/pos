@@ -1,26 +1,30 @@
 
 
-import 'package:pos/config/ObjectboxConnection.dart';
+import 'package:pos/config/DB/ObjectboxConnection.dart';
 import 'package:pos/core/dao/ProductoDAO.dart';
-
 import '../../objectbox.g.dart';
 import '../modelos/producto.dart';
 class ProductoDAOObjectboxImpl implements ProductoDao{
+  final ObjectboxConnection _connectionDB;
 
-  Box<Producto> productoDB = ObjectboxConnection.produtoBox;
+  ProductoDAOObjectboxImpl(this._connectionDB);
+
 
   @override
   Producto? getProductoById(int idProducto){
+    final productoDB = _connectionDB.produtoBox;
     return productoDB.get(idProducto);
   }
 
   @override
   List<Producto> getAllProductos(){
+    final productoDB = _connectionDB.produtoBox;
     return productoDB.getAll();
   }
 
   @override
   bool agregarProducto(Producto producto){
+    final productoDB = _connectionDB.produtoBox;
     try{
       productoDB.put(producto);
       return true;
@@ -31,6 +35,7 @@ class ProductoDAOObjectboxImpl implements ProductoDao{
 
   @override
   bool eliminarProducto(int idProducto){
+    final productoDB = _connectionDB.produtoBox;
     try {
       productoDB.remove(idProducto);
       return true;
@@ -39,9 +44,9 @@ class ProductoDAOObjectboxImpl implements ProductoDao{
     }
   }
 
-
   @override
   bool updateProducto(Producto producto){
+    final productoDB = _connectionDB.produtoBox;
     try{
       productoDB.put(producto);
       return true;
@@ -49,4 +54,12 @@ class ProductoDAOObjectboxImpl implements ProductoDao{
       return false;
     }
   }
+
+  @override
+  List<Producto> existeProductoPorNombre(String nombre) {
+    final productoDB = _connectionDB.produtoBox;
+    Query<Producto> query = productoDB.query(Producto_.nombre.equals(nombre)).build();
+    return query.find();
+  }
+
 }

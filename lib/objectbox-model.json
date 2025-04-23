@@ -31,19 +31,143 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "2:8321215789789525065",
+      "lastPropertyId": "7:2712813858697669180",
+      "name": "DetalleVenta",
+      "properties": [
+        {
+          "id": "1:8503066495780579305",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "4:6061606775136171451",
+          "name": "fecha",
+          "type": 10
+        },
+        {
+          "id": "6:2799609472521758098",
+          "name": "total",
+          "type": 8
+        },
+        {
+          "id": "7:2712813858697669180",
+          "name": "cambio",
+          "type": 8
+        }
+      ],
+      "relations": [
+        {
+          "id": "2:6359937038915105604",
+          "name": "metodoPago",
+          "targetId": "5:3718697418139948114"
+        },
+        {
+          "id": "3:497114194251762227",
+          "name": "productos",
+          "targetId": "6:4892755308081149155"
+        }
+      ]
+    },
+    {
+      "id": "5:3718697418139948114",
+      "lastPropertyId": "5:4874227048877063833",
+      "name": "MetodoPago",
+      "properties": [
+        {
+          "id": "1:2604588701438866511",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:2268194850490062830",
+          "name": "tipo",
+          "type": 9
+        },
+        {
+          "id": "3:3669921919589658736",
+          "name": "index",
+          "type": 6
+        },
+        {
+          "id": "4:584725373687852078",
+          "name": "cantidad",
+          "type": 8
+        },
+        {
+          "id": "5:4874227048877063833",
+          "name": "detalleVentaId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "2:6205319674731735682",
+          "relationTarget": "DetalleVenta"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "6:4892755308081149155",
+      "lastPropertyId": "4:455948542356927870",
+      "name": "ProductoVenta",
+      "properties": [
+        {
+          "id": "1:6573543781710029667",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "3:7452063620447716998",
+          "name": "cantidad",
+          "type": 6
+        },
+        {
+          "id": "4:455948542356927870",
+          "name": "productoId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "4:5330336020163595312",
+          "relationTarget": "Producto"
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "1:7484616887157383674",
-  "lastIndexId": "0:0",
-  "lastRelationId": "0:0",
+  "lastEntityId": "6:4892755308081149155",
+  "lastIndexId": "4:5330336020163595312",
+  "lastRelationId": "3:497114194251762227",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
   "modelVersionParserMinimum": 5,
-  "retiredEntityUids": [],
-  "retiredIndexUids": [],
-  "retiredPropertyUids": [
-    3966460281539830874
+  "retiredEntityUids": [
+    3807589492740891168,
+    7553638658740325030
   ],
-  "retiredRelationUids": [],
+  "retiredIndexUids": [
+    5952045895011704472
+  ],
+  "retiredPropertyUids": [
+    3966460281539830874,
+    309569487768899047,
+    7515698616284220654,
+    5319326040372713525,
+    2693550361474404303,
+    161122530268866708,
+    3732337356324359087,
+    6997495146643040923,
+    3987775346174637591,
+    571093646507608801,
+    2128574782096673623,
+    4883964891603577158,
+    4623794115690852862,
+    622841640104325076
+  ],
+  "retiredRelationUids": [
+    7334335245334417135
+  ],
   "version": 1
 }

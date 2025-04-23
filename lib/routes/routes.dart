@@ -5,9 +5,9 @@ import 'package:pos/presentation/pages/ajustes.dart';
 import 'package:pos/presentation/pages/login.dart';
 import 'package:pos/presentation/pages/productos.dart';
 import 'package:pos/presentation/pages/update_producto.dart';
-import 'package:pos/presentation/pages/ventas.dart';
+import 'package:pos/presentation/pages/ventas/ventas.dart';
 
-import '../presentation/pages/p_o_s.dart';
+import '../presentation/pages/pos/p_o_s.dart';
 
 final GoRouter router = GoRouter(
   routerNeglect: true,

@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pos/core/servicios/ProductoServicio.dart';
+import 'package:pos/presentation/viewmodels/ProductosViewModel.dart';
 
-class AddProducto extends StatefulWidget {
+class AddProducto extends ConsumerStatefulWidget {
   const AddProducto({Key? key}) : super(key: key);
 
   @override
-  _AddProductoState createState() => _AddProductoState();
+  ConsumerState<AddProducto> createState() => _AddProductoState();
 }
 
-class _AddProductoState extends State<AddProducto> {
+class _AddProductoState extends ConsumerState<AddProducto> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _nombre = TextEditingController();
   final TextEditingController _precio = TextEditingController();
@@ -110,7 +112,10 @@ class _AddProductoState extends State<AddProducto> {
                 ElevatedButton(onPressed: () {
                   if(_formKey.currentState!.validate()){
                     _formKey.currentState!.save();
-                    _agregarProducto(_nombre.text, double.parse(_precio.text), int.parse(_stock.text));
+                    bool res = ref.read(productosVMProvider).agregarProducto(_nombre.text, double.parse(_precio.text), int.parse(_stock.text));
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text(res ? "Se agrego el produto ${_nombre.text}":"No se pudo agregar el producto")),
+                    );
                   }
                 }, style: ElevatedButton.styleFrom(
                     minimumSize: Size(double.infinity, 50)
@@ -122,11 +127,4 @@ class _AddProductoState extends State<AddProducto> {
     );
   }
 
-  void _agregarProducto(String nombre, double precio, int stock) {
-    ProductoServicio productoServicio = ProductoServicio();
-    bool res = productoServicio.agregarProducto(nombre, precio, stock);
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(res ? "Se agrego el produto $nombre":"No se pudo agregar el producto")),
-    );
-  }
 }

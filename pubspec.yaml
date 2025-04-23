@@ -41,6 +41,7 @@ dependencies:
   after_layout: ^1.2.0
   flutter_riverpod: ^2.6.1
   numberpicker: ^2.1.2
+  custom_accordion: ^1.0.0
 
 dev_dependencies:
   flutter_test:
