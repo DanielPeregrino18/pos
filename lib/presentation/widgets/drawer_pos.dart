@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:pos/presentation/viewmodels/LoginViewModel.dart';
 
-class DrawerPos extends StatelessWidget {
+class DrawerPos extends ConsumerWidget {
   const DrawerPos({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return SafeArea(
       child: Drawer(
         child: Padding(
@@ -49,6 +51,7 @@ class DrawerPos extends StatelessWidget {
               Divider(),
               TextButton.icon(
                 onPressed: () {
+                  ref.read(loginStateProvider).logout();
                   context.go("/");
                 },
                 label: Text("Cerrar Sesión", style: TextStyle(fontSize: 20, color: Colors.red)),

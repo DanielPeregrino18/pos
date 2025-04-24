@@ -1,65 +1,79 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter/material.dart';
 import 'package:pos/presentation/pages/add_producto.dart';
-import 'package:pos/presentation/pages/ajustes.dart';
-import 'package:pos/presentation/pages/login.dart';
+import 'package:pos/presentation/pages/ajustes/ajustes.dart';
+import 'package:pos/presentation/pages/login/login.dart';
 import 'package:pos/presentation/pages/productos.dart';
 import 'package:pos/presentation/pages/update_producto.dart';
 import 'package:pos/presentation/pages/ventas/ventas.dart';
-
+import 'package:pos/presentation/viewmodels/LoginViewModel.dart';
 import '../presentation/pages/pos/p_o_s.dart';
 
-final GoRouter router = GoRouter(
-  routerNeglect: true,
-  routes: <RouteBase>[
-    GoRoute(
-      path: '/',
-      builder: (BuildContext context, GoRouterState state) {
-        return const Login();
-      },
-      routes: <RouteBase>[
-        GoRoute(
-          path: 'pos',
-          builder: (BuildContext context, GoRouterState state) {
-            return const POS();
-          },
-        ),
-        GoRoute(
-            path: 'productos',
-            builder: (context, state) {
-              return const Productos();
+final routerProvider = Provider<GoRouter>((ref) {
+
+  final GoRouter _router = GoRouter(
+    routerNeglect: true,
+    initialLocation: "/pos",
+    routes: <RouteBase>[
+      GoRoute(
+        path: '/',
+        builder: (BuildContext context, GoRouterState state) {
+            return const Login();
+
+        },
+        routes: <RouteBase>[
+          GoRoute(
+            path: 'pos',
+            builder: (BuildContext context, GoRouterState state) {
+              return const POS();
             },
-            routes: [
-              GoRoute(
-                path: 'addproducto',
-                builder: (context, state) {
-                  return const AddProducto();
-                },
-              ),
-              GoRoute(
-                path: 'updateProducto/:id',
-                builder: (context, state) {
-                  final idProducto = state.pathParameters['id']!;
-                  return  UpdateProducto(
-                    id: idProducto,
-                  );
-                },
-              )
-            ]
-        ),
-        GoRoute(
-            path: 'ventas',
-            builder: (context, state) {
-              return const Ventas();
-            },
-        ),
-        GoRoute(
-            path: 'ajustes',
-            builder: (context, state) {
-              return const Ajustes();
-            },
-        ),
-      ],
-    ),
-  ],
-);
+          ),
+          GoRoute(
+              path: 'productos',
+              builder: (context, state) {
+                return const Productos();
+              },
+              routes: [
+                GoRoute(
+                  path: 'addproducto',
+                  builder: (context, state) {
+                    return const AddProducto();
+                  },
+                ),
+                GoRoute(
+                  path: 'updateProducto/:id',
+                  builder: (context, state) {
+                    final idProducto = state.pathParameters['id']!;
+                    return  UpdateProducto(
+                      id: idProducto,
+                    );
+                  },
+                )
+              ]
+          ),
+          GoRoute(
+              path: 'ventas',
+              builder: (context, state) {
+                return const Ventas();
+              },
+          ),
+          GoRoute(
+              path: 'ajustes',
+              builder: (context, state) {
+                return const Ajustes();
+              },
+          ),
+        ],
+      ),
+    ],
+    redirect: (context, state) async {
+      final isUserLogeado = await ref.read(loginStateProvider).isUsuarioLogeado();
+      if(!isUserLogeado){
+        return "/";
+      }
+      return null;
+    },
+  );
+ return _router;
+},);

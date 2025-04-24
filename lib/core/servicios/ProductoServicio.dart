@@ -42,6 +42,6 @@ class ProductoServicio{
         return false;
       }
     }
-    return productoRepositorio.agregarProducto(producto);
+    return productoRepositorio.updateProducto(producto);
   }
 }

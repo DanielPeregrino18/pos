@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:pos/presentation/widgets/form_login.dart';
+import 'package:pos/presentation/pages/login/widgets/form_login.dart';
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
 
