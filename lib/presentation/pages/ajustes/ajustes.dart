@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:pos/config/DI/Dependencias.dart';
 import 'package:pos/data/modelos/Claim.dart';
 import 'package:pos/presentation/viewmodels/LoginViewModel.dart';
 
@@ -14,17 +16,20 @@ class Ajustes extends ConsumerStatefulWidget {
 }
 
 class _AjustesState extends ConsumerState<Ajustes> {
+
+  Color pickerColor = Color(0xff443a49);
+  Color currentColor = Color(0xff003a49);
+
+
+  void changeColor(Color color) {
+    setState(() => pickerColor = color);
+  }
+
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context).colorScheme;
 
-    Color pickerColor = Color(0xff443a49);
-    Color currentColor = Color(0xff003a49);
 
-
-    void changeColor(Color color) {
-      setState(() => pickerColor = color);
-    }
 
     final Claim claim = ref.read(loginStateProvider).claim!;
     return Scaffold(
@@ -34,14 +39,15 @@ class _AjustesState extends ConsumerState<Ajustes> {
           style: TextStyle(color: theme.onPrimary, fontWeight: FontWeight.w500),
         ),
         centerTitle: true,
-        iconTheme: IconThemeData(color: theme.primary),
-        backgroundColor: currentColor,
+        iconTheme: IconThemeData(color: theme.onPrimary),
+        backgroundColor: theme.primary,
       ),
       drawer: DrawerPos(),
       body: Center(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SizedBox(height: 20,),
             Text("Email: ${claim.Email} ", style: TextStyle(fontSize: 30, fontWeight: FontWeight.w600),),
             Text("Company name: ${claim.CompanyName}", style: TextStyle(fontSize: 30, fontWeight: FontWeight.w600)),
             Text("ID Compañia: ${claim.IdCompany}", style: TextStyle(fontSize: 30, fontWeight: FontWeight.w600)),
@@ -59,9 +65,10 @@ class _AjustesState extends ConsumerState<Ajustes> {
                     TextButton(onPressed: () {
                       setState(() {
                         currentColor = pickerColor;
-                        print(theme.primary);
+                        ref.read(colorSchemeProvider.notifier).state = ColorScheme.fromSeed(seedColor: pickerColor);
+                        context.pop();
                       });
-                    }, child: Text("Aceptar"))
+                    }, child: Text("Aceptar", style: TextStyle(color: theme.primary),),)
                   ],
                 );
               },);

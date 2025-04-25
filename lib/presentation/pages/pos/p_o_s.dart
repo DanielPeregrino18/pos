@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:numberpicker/numberpicker.dart';
 import 'package:pos/presentation/pages/pos/widgets/realizar_venta.dart';
-import 'package:pos/presentation/pages/productos.dart';
 import 'package:pos/presentation/viewmodels/PosViewModel.dart';
 import 'package:pos/presentation/widgets/background_dismissible.dart';
 import 'package:pos/presentation/widgets/drawer_pos.dart';

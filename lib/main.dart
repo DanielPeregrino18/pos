@@ -28,7 +28,7 @@ class MyApp extends ConsumerWidget {
       title: "POS",
       theme: ThemeData(
         useMaterial3: true,
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue)
+        colorScheme: ref.watch(colorSchemeProvider)
       ),
       routerConfig: ref.read(routerProvider),
     );

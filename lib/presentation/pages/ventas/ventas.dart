@@ -31,60 +31,107 @@ class _VentasState extends ConsumerState<Ventas> {
       ),
       drawer: DrawerPos(),
       body: ListView.builder(
-              padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-              itemCount: ref.watch(ventasVMProvider).getAllDetallesVentas().length,
-                itemBuilder: (context, index) {
+        padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+        itemCount: ref.watch(ventasVMProvider).getAllDetallesVentas().length,
+        itemBuilder: (context, index) {
+          List<Map<String, dynamic>> productosCantidades = ref
+              .watch(ventasVMProvider)
+              .getProductosPorIndex(index);
+          List<MetodoPago> metodosPago = ref
+              .watch(ventasVMProvider)
+              .getMetodoPagoPorIndex(index);
 
-                  List<Map<String, dynamic>> productosCantidades = ref.watch(ventasVMProvider).getProductosPorIndex(index);
-                  List<MetodoPago> metodosPago = ref.watch(ventasVMProvider).getMetodoPagoPorIndex(index);
-
-                  List<Text> productosText = productosCantidades.map((e) =>
-                                          Text("${e["cantidad"]} ${e["nombre"]} \$${e["totalProducto"]}", style: TextStyle(fontSize: 20)),).toList();
-                  List<Text> metodoPagoText = metodosPago.map((e) =>
-                                            Text("${e.tipo == "Efectivo"?"":"Tarjeta"} ${e.tipo} \$${e.cantidad}", style: TextStyle(fontSize: 20)),).toList();
-                  return CustomAccordion(
-                    title: "Venta ${ref.watch(ventasVMProvider).todasLasVentas[index].id}",
-                    subTitle: formatter.format(ref.watch(ventasVMProvider).todasLasVentas[index].fecha!),
-                    headerBackgroundColor: theme.primary,
-                    titleStyle: const TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
+          List<Text> productosText =
+              productosCantidades
+                  .map(
+                    (e) => Text(
+                      "${e["cantidad"]} ${e["nombre"]} \$${e["totalProducto"]}",
+                      style: TextStyle(fontSize: 20),
                     ),
-                    subTitleStyle: const TextStyle(
-                      fontSize: 19,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.white,
+                  )
+                  .toList();
+          List<Text> metodoPagoText =
+              metodosPago
+                  .map(
+                    (e) => Text(
+                      "${e.tipo == "Efectivo" ? "" : "Tarjeta"} ${e.tipo} \$${e.cantidad}",
+                      style: TextStyle(fontSize: 20),
                     ),
-                    toggleIconOpen: Icons.keyboard_arrow_down_sharp,
-                    toggleIconClose: Icons.keyboard_arrow_up_sharp,
-                    headerIconColor: Colors.white,
-                    accordionElevation: 10,
-                    showContent: false,
-                    widgetItems: Row(
-                      children: [
-                       Expanded(
-                         child: Column(children: [
-                           Text("Productos", style: TextStyle(fontSize: 25, fontWeight: FontWeight.w600),),
-                           SizedBox(height: 5,),
-                           ...productosText,
-                           Text("Total: ${ref.watch(ventasVMProvider).todasLasVentas[index].total.toStringAsFixed(2)}", style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600))
-                         ],),
-                       ),
-                        Expanded(
-                          child: Column(children: [
-                            Text("Metodos de Pago", style: TextStyle(fontSize: 25, fontWeight: FontWeight.w600)),
-                            SizedBox(height: 5,),
-                            ...metodoPagoText,
-                            Text("Cambio: ${ref.watch(ventasVMProvider).todasLasVentas[index].cambio.toStringAsFixed(2)}", style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500))
-                          ],),
-                        )
-
-                      ],
-                    ),
-                  );
-                }
-              )
+                  )
+                  .toList();
+          return CustomAccordion(
+            title:
+                "Venta ${ref.watch(ventasVMProvider).todasLasVentas[index].id}",
+            subTitle: formatter.format(
+              ref.watch(ventasVMProvider).todasLasVentas[index].fecha!,
+            ),
+            headerBackgroundColor: theme.primary,
+            titleStyle: const TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+            ),
+            subTitleStyle: const TextStyle(
+              fontSize: 19,
+              fontWeight: FontWeight.w600,
+              color: Colors.white,
+            ),
+            toggleIconOpen: Icons.keyboard_arrow_down_sharp,
+            toggleIconClose: Icons.keyboard_arrow_up_sharp,
+            headerIconColor: Colors.white,
+            accordionElevation: 10,
+            showContent: false,
+            widgetItems: Row(
+              children: [
+                Expanded(
+                  child: Column(
+                    children: [
+                      Text(
+                        "Productos",
+                        style: TextStyle(
+                          fontSize: 25,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      SizedBox(height: 5),
+                      ...productosText,
+                      Text(
+                        "Total: ${ref.watch(ventasVMProvider).todasLasVentas[index].total.toStringAsFixed(2)}",
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Expanded(
+                  child: Column(
+                    children: [
+                      Text(
+                        "Metodos de Pago",
+                        style: TextStyle(
+                          fontSize: 25,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      SizedBox(height: 5),
+                      ...metodoPagoText,
+                      Text(
+                        "Cambio: ${ref.watch(ventasVMProvider).todasLasVentas[index].cambio.toStringAsFixed(2)}",
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          );
+        },
+      ),
     );
   }
 }

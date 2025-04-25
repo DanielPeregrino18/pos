@@ -1,6 +1,7 @@
 
 
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:pos/core/dao/DetalleVentaDAO.dart';
@@ -8,6 +9,7 @@ import 'package:pos/core/dao/ProductoDAO.dart';
 import 'package:pos/core/encriptado/SecureStorage.dart';
 import 'package:pos/core/servicios/DetalleVentaServicio.dart';
 import 'package:pos/core/servicios/ProductoServicio.dart';
+import 'package:pos/data/modelos/Venta.dart';
 import 'package:pos/data/repositorios/DetalleVentaDAOObjectBoxImpl.dart';
 import 'package:pos/data/repositorios/ProductoDAOObjectboxImpl.dart';
 import '../../data/modelos/Claim.dart';
@@ -46,3 +48,11 @@ final FlutterSecureStorageProvider = Provider<FlutterSecureStorage>((ref) =>
 
 final secureStorageProvider = Provider<SecureStorage>((ref) =>
                             SecureStorage(ref.read(FlutterSecureStorageProvider)));
+
+//COLORSCHEME
+final colorSchemeProvider = StateProvider<ColorScheme>((ref) =>
+                          ColorScheme.fromSeed(seedColor: Colors.blue),);
+
+//REPORTE DE VENTAS
+final ventasApiProvider = Provider<VentaApi>((ref) =>
+                              VentaApi(ref.read(DioProvider)),);

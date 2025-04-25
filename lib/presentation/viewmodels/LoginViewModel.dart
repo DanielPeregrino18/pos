@@ -36,6 +36,9 @@ class LoginState extends ChangeNotifier{
 
   Future<bool> isUsuarioLogeado() async{
     isLogeado = await secureStorage.isUsuarioLogeado();
+    if(isLogeado){
+      claim = await secureStorage.getUser();
+    }
     return isLogeado;
   }
   Future logout() async{

@@ -37,6 +37,7 @@ class ProductosViewModel extends ChangeNotifier {
               )
               .toList();
     }
+    notifyListeners();
   }
 
   //ELIMINAR PRODUCTO

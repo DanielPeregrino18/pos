@@ -29,4 +29,5 @@ class SecureStorage {
   Future deleteUser() async {
     await storage.delete(key: _keyUser);
   }
+
 }

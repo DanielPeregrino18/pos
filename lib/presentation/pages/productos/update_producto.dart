@@ -8,7 +8,7 @@ import 'package:go_router/go_router.dart';
 import 'package:pos/core/servicios/ProductoServicio.dart';
 import 'package:pos/presentation/viewmodels/ProductosViewModel.dart';
 
-import '../../data/modelos/producto.dart';
+import '../../../data/modelos/producto.dart';
 
 class UpdateProducto extends ConsumerStatefulWidget {
   final String? id;
