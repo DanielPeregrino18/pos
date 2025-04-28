@@ -6,6 +6,8 @@ import 'package:intl/intl.dart';
 import 'package:pos/config/DI/Dependencias.dart';
 import 'package:pos/data/modelos/Venta.dart';
 
+
+//Clase que maneja el estado de reporte de ventas.
 final reporteVentasVMProvider = ChangeNotifierProvider<ReporteVentasVM>(
   (ref) => ReporteVentasVM(ref.read(ventasApiProvider)),
 );
@@ -20,6 +22,7 @@ class ReporteVentasVM extends ChangeNotifier {
   final DateFormat formatter = DateFormat('dd/MM/yyyy');
   ReporteVentasVM(this.ventaApi);
 
+  //Obtiene las ventas entre las fechas de inicio y fin.
   Future obtenerVentas() async {
     allVentas = await ventaApi.login(
       "19cf4bcd-c52c-41bf-9fc8-b1f3d91af2df",
@@ -38,6 +41,7 @@ class ReporteVentasVM extends ChangeNotifier {
     await cargarMas();
   }
 
+  //Carga mas elementos conforme vaya bajando el usuario.
   Future cargarMas() async{
     int iteraciones = min(ventasPorPagina, allVentas.length);
     await Future.delayed(Duration(seconds: 2), () {

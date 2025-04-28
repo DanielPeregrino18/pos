@@ -1,5 +1,3 @@
-
-
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -15,7 +13,7 @@ import 'package:pos/data/repositorios/ProductoDAOObjectboxImpl.dart';
 import '../../data/modelos/Claim.dart';
 import '../DB/ObjectboxConnection.dart';
 
-
+//OBJECTBOX
 final objectBoxProvider = Provider<ObjectboxConnection>((ref) => throw UnimplementedError());
 
 //DIO
@@ -39,7 +37,7 @@ final productoServicioProvider = Provider<ProductoServicio>((ref) =>
 final detalleVentasDAOImplProvider = Provider<DetalleVentaDAO>((ref) =>
                       DetalleVentaDAOObjectBoxImpl(ref.read(objectBoxProvider)),);
 final detalleVentasServicioProvider = Provider<DetalleVentaServicio>((ref) =>
-                      DetalleVentaServicio(ref.read(detalleVentasDAOImplProvider)) ,);
+                      DetalleVentaServicio(ref.read(detalleVentasDAOImplProvider), ref.read(productoServicioProvider)) ,);
 
 
 //SECURE STORAGE

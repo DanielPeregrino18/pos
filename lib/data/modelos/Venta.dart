@@ -4,10 +4,13 @@ import 'package:retrofit/retrofit.dart';
 
 part 'Venta.g.dart';
 
+
+//La clase abstracta contiene nuestra declaracion de AP que queremos llamar.
 @RestApi(baseUrl: 'http://192.168.1.128:8080/api/')
 abstract class VentaApi {
   factory VentaApi(Dio dio, {String? baseUrl}) = _VentaApi;
 
+  //Metodo get con los parametros uri que se van a utilizar (Query), devuelve una lista por que es lo que ergera la api.
   @GET('/reportes/ObtenerLibroGeneral')
   Future<List<Venta>> login(
     @Query('idSa') String idSa,
@@ -24,6 +27,7 @@ abstract class VentaApi {
   );
 }
 
+//Modelo que se obtiene por la api de reporte de ventas.
 @JsonSerializable()
 class Venta {
   Venta(

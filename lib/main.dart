@@ -5,15 +5,14 @@ import 'package:pos/config/DB/ObjectboxConnection.dart';
 import 'package:pos/config/DI/Dependencias.dart';
 import 'package:pos/routes/routes.dart';
 Future<void> main() async {
-  // This is required so ObjectBox can get the application directory
-  // to store the database in.
+  //Se usa esta linea si flutter necesita llamar al codigo nativo antes de llamar runapp
   WidgetsFlutterBinding.ensureInitialized();
+  //Inicializa la conexion con la base de datos
   final objectbox = await ObjectboxConnection.create();
-  //client.loggin(UserModel("pruebas_rrj@rrj.com.mx", "Ads720510.")).then((value) {print(value.Email);});
 
-  runApp(ProviderScope(
+  runApp(ProviderScope( //Permite accesar a los proveedores desde cualquier parte de la aplicacion.
       overrides: [
-        objectBoxProvider.overrideWithValue(objectbox)
+        objectBoxProvider.overrideWithValue(objectbox) //Sobrescribe el proveedor de objectbox (dependencias)
       ],
       child: MyApp()
   ));
@@ -28,9 +27,9 @@ class MyApp extends ConsumerWidget {
       title: "POS",
       theme: ThemeData(
         useMaterial3: true,
-        colorScheme: ref.watch(colorSchemeProvider)
+        colorScheme: ref.watch(colorSchemeProvider)  //Obtiene el tema del provedor de estados
       ),
-      routerConfig: ref.read(routerProvider),
+      routerConfig: ref.read(routerProvider), //Obtiene las rutas del proveedor
     );
   }
 }

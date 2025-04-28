@@ -1,9 +1,8 @@
-
-
 import 'package:pos/core/dao/DetalleVentaDAO.dart';
 import 'package:pos/data/modelos/detalleVenta.dart';
 import '../../config/DB/ObjectboxConnection.dart';
 
+//Implementacion de DetalleVentasDAO utilizando ObjectBox.
 class DetalleVentaDAOObjectBoxImpl extends DetalleVentaDAO{
 
   final ObjectboxConnection _connectionDB;

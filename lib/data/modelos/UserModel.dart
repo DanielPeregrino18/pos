@@ -1,6 +1,8 @@
 import 'package:json_annotation/json_annotation.dart';
 
 part 'UserModel.g.dart';
+
+//Modelo que se utiliza para mandar los datos a la api de login.
 @JsonSerializable()
 class UserModel {
   @JsonKey(name: 'Email')

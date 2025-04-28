@@ -25,6 +25,7 @@ class ProductosViewModel extends ChangeNotifier {
     productosFiltrados = productosVenta;
   }
 
+  //Muestra los productos filtrados por nombre.
   void filtrarProductos(String value) {
     if (value.isEmpty) {
       productosFiltrados = productosVenta;
@@ -60,6 +61,7 @@ class ProductosViewModel extends ChangeNotifier {
     );
   }
 
+  //Actualiza un producto existente.
   bool actualizarProducto(String nombre, String precio, String stock) {
     productoActualizando!.nombre = nombre;
     productoActualizando!.precio = double.parse(precio);

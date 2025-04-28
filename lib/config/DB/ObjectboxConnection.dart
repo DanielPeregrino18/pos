@@ -12,6 +12,7 @@ class ObjectboxConnection{
   late final Box<Producto> produtoBox;
   late final Box<DetalleVenta> detalleVentaBox;
 
+  //Obtiene las conexiones al as bases de datos.
   ObjectboxConnection._create(this._store) {
     produtoBox = Box<Producto>(_store);
     detalleVentaBox = Box<DetalleVenta>(_store);

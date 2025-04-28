@@ -1,6 +1,7 @@
 
 import 'package:objectbox/objectbox.dart';
 
+//Modelo de productos a la venta.
 @Entity()
 class Producto {
   @Id()
@@ -16,12 +17,9 @@ class Producto {
     return {
       "id": "$id",
       "nombre": nombre!,
-      "precio": format(precio!),
+      "precio": precio!.toStringAsFixed(2),
       "stock": "$stock"
     };
   }
 
-  String format(double n) {
-    return n.toStringAsFixed( 2);
-  }
 }

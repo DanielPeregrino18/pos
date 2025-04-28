@@ -11,17 +11,17 @@ import '../presentation/pages/pos/p_o_s.dart';
 import '../presentation/pages/productos/add_producto.dart';
 import '../presentation/pages/productos/productos.dart';
 
+//Proveedor de rutas de la aplicacion.
 final routerProvider = Provider<GoRouter>((ref) {
 
   final GoRouter _router = GoRouter(
     routerNeglect: true,
-    initialLocation: "/pos",
+    initialLocation: "/pos", //Ruta inicial de la aplicación
     routes: <RouteBase>[
       GoRoute(
-        path: '/',
+        path: '/',   //ruta
         builder: (BuildContext context, GoRouterState state) {
-            return const Login();
-
+            return const Login();  //pagina a la que te redirige
         },
         routes: <RouteBase>[
           GoRoute(
@@ -43,9 +43,9 @@ final routerProvider = Provider<GoRouter>((ref) {
                   },
                 ),
                 GoRoute(
-                  path: 'updateProducto/:id',
+                  path: 'updateProducto/:id', //ruta parametrizada
                   builder: (context, state) {
-                    final idProducto = state.pathParameters['id']!;
+                    final idProducto = state.pathParameters['id']!; //se obtiene el id de la ruta
                     return  UpdateProducto(
                       id: idProducto,
                     );
@@ -74,12 +74,13 @@ final routerProvider = Provider<GoRouter>((ref) {
         ],
       ),
     ],
+    //Te redirige a una ruta y no te permite salir de ella, a menos que retorne null.
     redirect: (context, state) async {
       final isUserLogeado = await ref.read(loginStateProvider).isUsuarioLogeado();
       if(!isUserLogeado){
-        return "/";
+        return "/"; //te redirige al login si el usuario no esta logeado
       }
-      return null;
+      return null; //si el usuario esta logeado te permite navegar en la app.
     },
   );
  return _router;

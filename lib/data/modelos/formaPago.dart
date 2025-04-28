@@ -1,6 +1,7 @@
 
 import 'package:flutter/cupertino.dart';
 
+//Se utiliza para generar los textfield de metodos de pago en el punto de venta.
 class FormaPago {
 
   int id = 0;

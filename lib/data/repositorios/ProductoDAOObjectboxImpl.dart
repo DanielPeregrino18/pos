@@ -4,7 +4,9 @@ import 'package:pos/config/DB/ObjectboxConnection.dart';
 import 'package:pos/core/dao/ProductoDAO.dart';
 import '../../objectbox.g.dart';
 import '../modelos/producto.dart';
-class ProductoDAOObjectboxImpl implements ProductoDao{
+
+//Implementacion de ProductoDAO utilizando ObjectBox
+class ProductoDAOObjectboxImpl extends ProductoDao{
   final ObjectboxConnection _connectionDB;
 
   ProductoDAOObjectboxImpl(this._connectionDB);
