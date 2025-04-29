@@ -1,10 +1,12 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pos/config/DB/ObjectboxConnection.dart';
 import 'package:pos/config/DI/Dependencias.dart';
 import 'package:pos/routes/routes.dart';
 Future<void> main() async {
+
   //Se usa esta linea si flutter necesita llamar al codigo nativo antes de llamar runapp
   WidgetsFlutterBinding.ensureInitialized();
   //Inicializa la conexion con la base de datos
@@ -22,6 +24,7 @@ class MyApp extends ConsumerWidget {
   const MyApp({super.key});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    ScreenUtil.init(context, designSize: Size(800, 1280), minTextAdapt: true);
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       title: "POS",

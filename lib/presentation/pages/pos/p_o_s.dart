@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:numberpicker/numberpicker.dart';
 import 'package:pos/presentation/pages/pos/widgets/realizar_venta.dart';
@@ -101,7 +102,7 @@ class _POSState extends ConsumerState<POS> {
                                   title: Text(
                                     "${carritoRef.carrito[index]['producto'].nombre}",
                                     style: TextStyle(
-                                      fontSize: 30,
+
                                       fontWeight: FontWeight.w600,
                                     ),
                                   ),
@@ -113,7 +114,7 @@ class _POSState extends ConsumerState<POS> {
                                       children: [
                                         Text(
                                           "Canitdad: ",
-                                          style: TextStyle(fontSize: 20),
+
                                         ),
                                         StatefulBuilder(
                                           builder: (context, SBsetState) {
@@ -168,7 +169,7 @@ class _POSState extends ConsumerState<POS> {
                           child: Padding(
                             padding: const EdgeInsets.symmetric(
                               vertical: 5,
-                              horizontal: 40,
+                              horizontal: 20,
                             ),
                             child: Column(
                               children: [
@@ -178,7 +179,7 @@ class _POSState extends ConsumerState<POS> {
                                       child: Text(
                                         "${carritoRef.carrito[index]['producto'].nombre}",
                                         style: TextStyle(
-                                          fontSize: 30,
+                                          fontSize: 35.sp,
                                           fontWeight: FontWeight.w600,
                                         ),
                                       ),
@@ -186,14 +187,14 @@ class _POSState extends ConsumerState<POS> {
                                     Expanded(
                                       child: Text(
                                         "Precio: \$${carritoRef.carrito[index]['producto'].precio.toStringAsFixed(2)}",
-                                        style: TextStyle(fontSize: 20),
+                                        style: TextStyle(fontSize: 25.sp),
                                         textAlign: TextAlign.center,
                                       ),
                                     ),
                                     Expanded(
                                       child: Text(
                                         "cantidad: ${carritoRef.carrito[index]['cantidad']}",
-                                        style: TextStyle(fontSize: 20),
+                                        style: TextStyle(fontSize: 25.sp),
                                         textAlign: TextAlign.center,
                                       ),
                                     ),
@@ -201,7 +202,7 @@ class _POSState extends ConsumerState<POS> {
                                       child: Text(
                                         "\$${carritoRef.carrito[index]['total'].toStringAsFixed(2)}",
                                         style: TextStyle(
-                                          fontSize: 20,
+                                          fontSize: 25.sp,
                                           fontWeight: FontWeight.w600,
                                         ),
                                         textAlign: TextAlign.end,
@@ -229,33 +230,45 @@ class _POSState extends ConsumerState<POS> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              FloatingActionButton.large(
-                heroTag: "btn1",
-                onPressed: () {
-                  setState(() {
-                    ref.read(carritoProvider).clear();
-                  });
-                },
-                child: Icon(Icons.cleaning_services),
+              SizedBox(
+                width: 120.sp,
+                height: 120.sp,
+                child: FittedBox(
+                  child: FloatingActionButton(
+                    heroTag: "btn1",
+                    onPressed: () {
+                      setState(() {
+                        ref.read(carritoProvider).clear();
+                      });
+                    },
+                    child: Icon(Icons.cleaning_services),
+                  ),
+                ),
               ),
               Text(
                 "Total: \$${ref.watch(carritoProvider).totalCarrito.toStringAsFixed(2)}",
-                style: TextStyle(fontSize: 40, fontWeight: FontWeight.w600),
+                style: TextStyle(fontSize: 40.sp, fontWeight: FontWeight.w600),
               ),
-              FloatingActionButton.large(
-                heroTag: "btn2",
-                onPressed: () {
-                  if(ref.read(carritoProvider).carrito.isNotEmpty) {
-                    showDialog(
-                      barrierDismissible: false,
-                      context: context,
-                      builder: (context) {
-                        return RealizarVenta();
-                      },
-                    );
-                  }
-                },
-                child: Icon(Icons.attach_money),
+              SizedBox(
+                width: 120.sp,
+                height: 120.sp,
+                child: FittedBox(
+                  child: FloatingActionButton(
+                    heroTag: "btn2",
+                    onPressed: () {
+                      if(ref.read(carritoProvider).carrito.isNotEmpty) {
+                        showDialog(
+                          barrierDismissible: false,
+                          context: context,
+                          builder: (context) {
+                            return RealizarVenta();
+                          },
+                        );
+                      }
+                    },
+                    child: Icon(Icons.attach_money),
+                  ),
+                ),
               ),
             ],
           ),

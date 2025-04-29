@@ -49,6 +49,7 @@ dependencies:
   flutter_secure_storage: ^9.2.4
   flutter_colorpicker: ^1.1.0
   lazy_load_scrollview: ^1.3.0
+  flutter_screenutil: ^5.9.3
 
 dev_dependencies:
   flutter_test:

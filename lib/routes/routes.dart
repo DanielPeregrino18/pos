@@ -35,6 +35,7 @@ final routerProvider = Provider<GoRouter>((ref) {
               builder: (context, state) {
                 return const Productos();
               },
+
               routes: [
                 GoRoute(
                   path: 'addproducto',

@@ -1,6 +1,9 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pos/config/DI/Dependencias.dart';
 import 'package:pos/data/modelos/Claim.dart';
@@ -28,6 +31,9 @@ class _AjustesState extends ConsumerState<Ajustes> {
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context).colorScheme;
+    double altura = MediaQuery.of(context).size.height;
+    double ancho = MediaQuery.of(context).size.width;
+    double diagonal = sqrt(pow(ancho, 2) + pow(altura, 2));
 
 
 
@@ -48,12 +54,13 @@ class _AjustesState extends ConsumerState<Ajustes> {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text("Email: ${claim.Email} ", style: TextStyle(fontSize: 30, fontWeight: FontWeight.w600),),
-            Text("Company name: ${claim.CompanyName}", style: TextStyle(fontSize: 30, fontWeight: FontWeight.w600)),
-            Text("ID Compañia: ${claim.IdCompany}", style: TextStyle(fontSize: 30, fontWeight: FontWeight.w600)),
-            Text("ID Saas: ${claim.IdSaas}", style: TextStyle(fontSize: 30, fontWeight: FontWeight.w600)),
-            Text("ID Suscripción: ${claim.IdSubscription}", style: TextStyle(fontSize: 30, fontWeight: FontWeight.w600)),
-            Text("Cuenta Master: ${claim.Master!?"Si": "No"}", style: TextStyle(fontSize: 30, fontWeight: FontWeight.w600)),
+            Text("Email: ${claim.Email} ", style: TextStyle(fontSize: 30.sp, fontWeight: FontWeight.w600),),
+            Text("Company name: ${claim.CompanyName}", style: TextStyle(fontSize: 30.sp, fontWeight: FontWeight.w600)),
+            Text("ID Compañia: ${claim.IdCompany}", style: TextStyle(fontSize: 30.sp, fontWeight: FontWeight.w600)),
+            Text("ID Saas: ${claim.IdSaas}", style: TextStyle(fontSize: 30.sp, fontWeight: FontWeight.w600)),
+            Text("ID Suscripción: ${claim.IdSubscription}", style: TextStyle(fontSize: 30.sp, fontWeight: FontWeight.w600)),
+            Text("Cuenta Master: ${claim.Master!?"Si": "No"}", style: TextStyle(fontSize: 30.sp, fontWeight: FontWeight.w600)),
+            Text("$altura, $ancho"),
             ElevatedButton(onPressed: () {
               showDialog(context: context, builder: (context) {
                 return AlertDialog(

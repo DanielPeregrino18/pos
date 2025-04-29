@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:pos/presentation/viewmodels/PosViewModel.dart';
@@ -17,7 +18,7 @@ class ImpresionTicket extends ConsumerWidget {
         title: Text(
           "Venta Realizada",
           style: TextStyle(
-            fontSize: 40,
+            fontSize: 40.sp,
             fontWeight: FontWeight.w600,
             color: Colors.white,
           ),
@@ -30,18 +31,18 @@ class ImpresionTicket extends ConsumerWidget {
           child: Card(
             elevation: 10,
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
+              padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Center(
                     child: Text(
                       "Ticket de Compra",
-                      style: TextStyle(fontSize: 40, fontWeight: FontWeight.w700),
+                      style: TextStyle(fontSize: 40.sp, fontWeight: FontWeight.w700),
                     ),
                   ),
-                  Center(child: Text("Ticket No. ${ref.read(carritoProvider).ultimaVenta!.id}", style: TextStyle(fontSize: 30, fontWeight: FontWeight.w500))),
-                  Center(child: Text("Fecha: ${formatter.format( ref.read(carritoProvider).ultimaVenta!.fecha!)}", style: TextStyle(fontSize: 30, fontWeight: FontWeight.w500))),
+                  Center(child: Text("Ticket No. ${ref.read(carritoProvider).ultimaVenta!.id}", style: TextStyle(fontSize: 30.sp, fontWeight: FontWeight.w500))),
+                  Center(child: Text("Fecha: ${formatter.format( ref.read(carritoProvider).ultimaVenta!.fecha!)}", style: TextStyle(fontSize: 30.sp, fontWeight: FontWeight.w500))),
                   SizedBox(height: 30),
                   Flexible(
                     child: ListView.builder(
@@ -57,28 +58,28 @@ class ImpresionTicket extends ConsumerWidget {
                               child: Text(
                                 productos[index]["nombre"],
                                 textAlign: TextAlign.center,
-                                style: TextStyle(fontSize: 30),
+                                style: TextStyle(fontSize: 25.sp),
                               ),
                             ),
                             Expanded(
                               child: Text(
                                 "Precio: \$${productos[index]["precio"]}",
                                 textAlign: TextAlign.center,
-                                style: TextStyle(fontSize: 30),
+                                style: TextStyle(fontSize: 25.sp),
                               ),
                             ),
                             Expanded(
                               child: Text(
                                 "Cantidad: ${productos[index]["cantidad"]}",
                                 textAlign: TextAlign.center,
-                                style: TextStyle(fontSize: 30),
+                                style: TextStyle(fontSize: 25.sp),
                               ),
                             ),
                             Expanded(
                               child: Text(
                                 "\$${productos[index]["totalProducto"]}",
                                 textAlign: TextAlign.center,
-                                style: TextStyle(fontSize: 30),
+                                style: TextStyle(fontSize: 25.sp),
                               ),
                             ),
                           ],
@@ -89,7 +90,7 @@ class ImpresionTicket extends ConsumerWidget {
                   SizedBox(height: 30,),
                   Text(
                     "Total: ${ref.read(carritoProvider).ultimaVenta!.total.toStringAsFixed(2)}",
-                    style: TextStyle(fontSize: 30),
+                    style: TextStyle(fontSize: 30.sp),
                   ),
                   Flexible(
                     child: ListView.builder(
@@ -100,13 +101,13 @@ class ImpresionTicket extends ConsumerWidget {
                         final metodosPago = ref.read(carritoProvider).ultimaVenta!
                                                             .metodoPago.toList();
                         String esTarjeta = metodosPago[index].tipo == "Efectivo" ? "" : "Tarjeta de ";
-                        return Text("$esTarjeta${metodosPago[index].tipo} : ${metodosPago[index].cantidad!.toStringAsFixed(2)}", style: TextStyle(fontSize: 30));
+                        return Text("$esTarjeta${metodosPago[index].tipo} : ${metodosPago[index].cantidad!.toStringAsFixed(2)}", style: TextStyle(fontSize: 30.sp));
                       },
                     ),
                   ),
                   Text(
                     "Cambio: ${ref.read(carritoProvider).ultimaVenta!.cambio.toStringAsFixed(2)}",
-                    style: TextStyle(fontSize: 30),
+                    style: TextStyle(fontSize: 30.sp),
                   ),
                 ],
               ),

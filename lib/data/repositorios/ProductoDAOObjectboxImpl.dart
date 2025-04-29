@@ -15,6 +15,7 @@ class ProductoDAOObjectboxImpl extends ProductoDao{
   @override
   Producto? getProductoById(int idProducto){
     final productoDB = _connectionDB.produtoBox;
+    
     return productoDB.get(idProducto);
   }
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pos/presentation/viewmodels/LoginViewModel.dart';
 
@@ -23,6 +24,7 @@ class _FormLoginState extends ConsumerState<FormLogin> {
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 50),
         child: Column(
+          spacing: 40.sp,
           children: <Widget>[
             TextFormField(
               controller: _email,
@@ -30,10 +32,11 @@ class _FormLoginState extends ConsumerState<FormLogin> {
                 focusedBorder: UnderlineInputBorder(
                   borderSide: BorderSide(color: theme.primary),
                 ),
-                prefixIcon: Icon(Icons.email, color: theme.primary),
+                prefixIcon: Icon(Icons.email, color: theme.primary, size: 50.sp,),
                 labelText: "Ingresa tu correo electronico",
-                labelStyle: TextStyle(color: theme.primary),
+                labelStyle: TextStyle(color: theme.primary, fontSize: 40.sp),
               ),
+              style: TextStyle(fontSize: 40.sp),
               validator: (value) {
                 if (value == null || value.isEmpty) {
                   return 'El correo no puede estar vacío.';
@@ -41,17 +44,17 @@ class _FormLoginState extends ConsumerState<FormLogin> {
                 return null;
               },
             ),
-            SizedBox(height: 10),
             TextFormField(
               controller: _password,
               decoration: InputDecoration(
                 focusedBorder: UnderlineInputBorder(
                   borderSide: BorderSide(color: theme.primary),
                 ),
-                prefixIcon: Icon(Icons.lock, color: theme.primary),
+                prefixIcon: Icon(Icons.lock, color: theme.primary, size: 50.sp,),
                 labelText: "Ingresa tu contraseña",
-                labelStyle: TextStyle(color: theme.primary),
+                labelStyle: TextStyle(color: theme.primary, fontSize:  40.sp),
               ),
+              style: TextStyle(fontSize: 40.sp),
               validator: (value) {
                 if (value == null || value.isEmpty) {
                   return 'La contraseña no puede estar vacia.';
@@ -59,7 +62,6 @@ class _FormLoginState extends ConsumerState<FormLogin> {
                 return null;
               },
             ),
-            SizedBox(height: 40),
             ElevatedButton(
               onPressed: () async {
                 if (_formKey.currentState!.validate()) {
@@ -81,7 +83,7 @@ class _FormLoginState extends ConsumerState<FormLogin> {
               ),
               child: const Text(
                 "Iniciar Sesión",
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
               ),
             ),
           ],

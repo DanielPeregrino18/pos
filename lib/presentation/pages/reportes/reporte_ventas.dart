@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:pos/presentation/pages/reportes/lista_reporte_ventas.dart';
 import 'package:pos/presentation/viewmodels/ReporteVentasViewModel.dart';
@@ -53,14 +54,14 @@ class _ReporteVentasState extends ConsumerState<ReporteVentas> {
                 },
                 label: Text(
                   formatter.format(ref.read(reporteVentasVMProvider).fechaInicio),
-                  style: TextStyle(fontSize: 30, fontWeight: FontWeight.w600),
+                  style: TextStyle(fontSize: 30.sp, fontWeight: FontWeight.w600),
                 ),
                 icon: Icon(Icons.calendar_month, size: 30),
               ),
               Text(
                 "al",
                 style: TextStyle(
-                  fontSize: 30,
+                  fontSize: 30.sp,
                   fontWeight: FontWeight.w600,
                   color: theme.primary,
                 ),
@@ -82,7 +83,7 @@ class _ReporteVentasState extends ConsumerState<ReporteVentas> {
                 },
                 label: Text(
                   formatter.format(ref.read(reporteVentasVMProvider).fechaFin),
-                  style: TextStyle(fontSize: 30, fontWeight: FontWeight.w600),
+                  style: TextStyle(fontSize: 30.sp, fontWeight: FontWeight.w600),
                 ),
                 icon: Icon(Icons.calendar_month, size: 30),
               ),
@@ -106,7 +107,7 @@ class _ReporteVentasState extends ConsumerState<ReporteVentas> {
         style: IconButton.styleFrom(
           backgroundColor: theme.primary,
           elevation: 15,
-          iconSize: 40,
+          iconSize: 40.sp,
           padding: EdgeInsets.all(20),
         ),
         onPressed: () async {

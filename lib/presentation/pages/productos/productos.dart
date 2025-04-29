@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pos/core/servicios/ProductoServicio.dart';
 import 'package:pos/data/modelos/producto.dart';
@@ -76,7 +77,7 @@ class _ProductosState extends ConsumerState<Productos> {
                       child: Text(
                         "ID Producto",
                         style: TextStyle(color: theme.primary,
-                            fontSize: 30,
+                            fontSize: 30.sp,
                             fontWeight: FontWeight.w600),
                       ),
                     ),
@@ -92,7 +93,7 @@ class _ProductosState extends ConsumerState<Productos> {
                     child: Text(
                       "Nombre",
                       style: TextStyle(color: theme.primary,
-                          fontSize: 30,
+                          fontSize: 30.sp,
                           fontWeight: FontWeight.w600),
                     ),
                   ),
@@ -107,7 +108,7 @@ class _ProductosState extends ConsumerState<Productos> {
                     child: Text(
                       "Precio",
                       style: TextStyle(color: theme.primary,
-                          fontSize: 30,
+                          fontSize: 30.sp,
                           fontWeight: FontWeight.w600),
                     ),
                   ),
@@ -122,7 +123,7 @@ class _ProductosState extends ConsumerState<Productos> {
                     child: Text(
                       "Existencias",
                       style: TextStyle(color: theme.primary,
-                          fontSize: 30,
+                          fontSize: 30.sp,
                           fontWeight: FontWeight.w600),
                     ),
                   ),
@@ -188,7 +189,7 @@ class _ProductosState extends ConsumerState<Productos> {
                           .width * 0.25,
                       child: Text(
                         "${productosFiltrados[index].id}",
-                        style: TextStyle(color: theme.onPrimary, fontSize: 30),
+                        style: TextStyle(color: theme.onPrimary, fontSize: 40.sp),
                       ),
                     ),
                   ),
@@ -202,7 +203,7 @@ class _ProductosState extends ConsumerState<Productos> {
                         .width * 0.25,
                     child: Text(
                       "${productosFiltrados[index].nombre}",
-                      style: TextStyle(color: theme.onPrimary, fontSize: 30),
+                      style: TextStyle(color: theme.onPrimary, fontSize: 40.sp),
                     ),
                   ),
                 ),
@@ -215,7 +216,7 @@ class _ProductosState extends ConsumerState<Productos> {
                         .width * 0.25,
                     child: Text(
                       "\$${productosFiltrados[index].precio!.toStringAsFixed(2)}",
-                      style: TextStyle(color: theme.onPrimary, fontSize: 30),
+                      style: TextStyle(color: theme.onPrimary, fontSize: 40.sp),
                     ),
                   ),
                 ),
@@ -230,7 +231,7 @@ class _ProductosState extends ConsumerState<Productos> {
                       padding: const EdgeInsets.only(left: 15),
                       child: Text(
                         "${productosFiltrados[index].stock}",
-                        style: TextStyle(color: theme.onPrimary, fontSize: 30),
+                        style: TextStyle(color: theme.onPrimary, fontSize: 40.sp),
                       ),
                     ),
                   ),

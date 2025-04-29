@@ -1,6 +1,7 @@
 import 'package:custom_accordion/custom_accordion.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:pos/presentation/viewmodels/VentasViewModel.dart';
 
@@ -31,7 +32,7 @@ class _VentasState extends ConsumerState<Ventas> {
       ),
       drawer: DrawerPos(),
       body: ListView.builder(
-        padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+        padding: EdgeInsets.symmetric(vertical: 20, horizontal: 10),
         itemCount: ref.watch(ventasVMProvider).getAllDetallesVentas().length,
         itemBuilder: (context, index) {
           List<Map<String, dynamic>> productosCantidades = ref
@@ -46,7 +47,7 @@ class _VentasState extends ConsumerState<Ventas> {
                   .map(
                     (e) => Text(
                       "${e["cantidad"]} ${e["nombre"]} \$${e["totalProducto"]}",
-                      style: TextStyle(fontSize: 20),
+                      style: TextStyle(fontSize: 25.sp),
                     ),
                   )
                   .toList();
@@ -55,7 +56,7 @@ class _VentasState extends ConsumerState<Ventas> {
                   .map(
                     (e) => Text(
                       "${e.tipo == "Efectivo" ? "" : "Tarjeta"} ${e.tipo} \$${e.cantidad}",
-                      style: TextStyle(fontSize: 20),
+                      style: TextStyle(fontSize: 25.sp),
                     ),
                   )
                   .toList();
@@ -89,7 +90,7 @@ class _VentasState extends ConsumerState<Ventas> {
                       Text(
                         "Productos",
                         style: TextStyle(
-                          fontSize: 25,
+                          fontSize: 30.sp,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
@@ -98,7 +99,7 @@ class _VentasState extends ConsumerState<Ventas> {
                       Text(
                         "Total: ${ref.watch(ventasVMProvider).todasLasVentas[index].total.toStringAsFixed(2)}",
                         style: TextStyle(
-                          fontSize: 20,
+                          fontSize: 25.sp,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
@@ -111,7 +112,7 @@ class _VentasState extends ConsumerState<Ventas> {
                       Text(
                         "Metodos de Pago",
                         style: TextStyle(
-                          fontSize: 25,
+                          fontSize: 30.sp,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
@@ -120,7 +121,7 @@ class _VentasState extends ConsumerState<Ventas> {
                       Text(
                         "Cambio: ${ref.watch(ventasVMProvider).todasLasVentas[index].cambio.toStringAsFixed(2)}",
                         style: TextStyle(
-                          fontSize: 20,
+                          fontSize: 25.sp,
                           fontWeight: FontWeight.w500,
                         ),
                       ),

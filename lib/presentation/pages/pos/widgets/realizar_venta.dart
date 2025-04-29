@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pos/data/modelos/formaPago.dart';
 import 'package:pos/presentation/pages/pos/widgets/impresion_ticket.dart';
@@ -41,11 +42,11 @@ class _RealizarVentaState extends ConsumerState<RealizarVenta> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       Expanded(
-                        child: Text("Efectivo", style: TextStyle(fontSize: 25)),
+                        child: Text("Efectivo", style: TextStyle(fontSize: 45.sp)),
                       ),
                       Expanded(
                         child: Padding(
-                          padding: const EdgeInsets.only(left: 8),
+                          padding: const EdgeInsets.only(left: 0),
                           child: TextField(
                             keyboardType: TextInputType.numberWithOptions(
                               decimal: true,
@@ -87,19 +88,19 @@ class _RealizarVentaState extends ConsumerState<RealizarVenta> {
           SizedBox(height: 15),
           Text(
             "Total: \$${carrito.totalCarrito.toStringAsFixed(2)}",
-            style: TextStyle(fontSize: 25, color: Colors.grey),
+            style: TextStyle(fontSize: 35.sp, color: Colors.grey),
           ),
           Text(
             "Pagado: \$${ref.watch(carritoProvider).totalPagado.toStringAsFixed(2)}",
-            style: TextStyle(fontSize: 25, color: Colors.grey),
+            style: TextStyle(fontSize: 35.sp, color: Colors.grey),
           ),
           Text(
             "Restante: \$${ref.watch(carritoProvider).restante.toStringAsFixed(2)}",
-            style: TextStyle(fontSize: 25, color: Colors.grey),
+            style: TextStyle(fontSize: 35.sp, color: Colors.grey),
           ),
           Text(
             "Cambio: \$${ref.watch(carritoProvider).cambio.toStringAsFixed(2)}",
-            style: TextStyle(fontSize: 25, color: Colors.grey),
+            style: TextStyle(fontSize: 35.sp, color: Colors.grey),
           ),
         ],
       ),
@@ -137,12 +138,12 @@ class _RealizarVentaState extends ConsumerState<RealizarVenta> {
         Expanded(
           child: Text(
             "Tarjeta ${formaPago.tipo}",
-            style: TextStyle(fontSize: 25),
+            style: TextStyle(fontSize: 40.sp),
           ),
         ),
         Expanded(
           child: Padding(
-            padding: const EdgeInsets.only(left: 8),
+            padding: const EdgeInsets.only(left: 2),
             child: TextField(
               controller: formaPago.control,
               keyboardType: TextInputType.numberWithOptions(decimal: true),
@@ -171,7 +172,7 @@ class _RealizarVentaState extends ConsumerState<RealizarVenta> {
             },
             icon: Icon(Icons.add_box_sharp),
             color: Colors.green,
-            iconSize: 35,
+            iconSize: 55.sp,
           )
         else
           formaPago.index! ==
@@ -187,7 +188,7 @@ class _RealizarVentaState extends ConsumerState<RealizarVenta> {
                 },
                 icon: Icon(Icons.remove_circle_outlined),
                 color: Colors.red,
-                iconSize: 35,
+                iconSize: 55.sp,
               )
               : SizedBox(width: 50),
       ],

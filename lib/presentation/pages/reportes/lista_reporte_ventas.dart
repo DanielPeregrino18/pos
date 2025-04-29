@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lazy_load_scrollview/lazy_load_scrollview.dart';
 import 'package:pos/data/modelos/Venta.dart';
 
@@ -90,7 +91,7 @@ class VentaItem extends ConsumerWidget {
               children: <Widget>[
                 Icon(Icons.shopify_sharp, size: 30),
                 SizedBox(width: 8.0),
-                Text("Venta $position", style: TextStyle(fontSize: 30, color: theme.primary)),
+                Text("Venta $position", style: TextStyle(fontSize: 30.sp, color: theme.primary)),
               ],
             ),
             Row(
@@ -99,25 +100,25 @@ class VentaItem extends ConsumerWidget {
                 Expanded(
                   child: Text(
                     "Zona: ${venta.ID_ZONA}",
-                    style: TextStyle(fontSize: 20),
+                    style: TextStyle(fontSize: 20.sp),
                   ),
                 ),
                 Expanded(
                   child: Text(
                     "ID Sucursal: ${venta.ID_SUCURSAL}",
-                    style: TextStyle(fontSize: 20),
+                    style: TextStyle(fontSize: 20.sp),
                   ),
                 ),
                 Expanded(
                   child: Text(
                     "ID Tipo: ${venta.ID_TIPO}",
-                    style: TextStyle(fontSize: 20),
+                    style: TextStyle(fontSize: 20.sp),
                   ),
                 ),
                 Expanded(
                   child: Text(
                     "Año: ${venta.YEAR}",
-                    style: TextStyle(fontSize: 20),
+                    style: TextStyle(fontSize: 20.sp),
                   ),
                 ),
               ],
@@ -128,25 +129,25 @@ class VentaItem extends ConsumerWidget {
                 Expanded(
                   child: Text(
                     "Mes: ${venta.MES}",
-                    style: TextStyle(fontSize: 20),
+                    style: TextStyle(fontSize: 20.sp),
                   ),
                 ),
                 Expanded(
                   child: Text(
                     "Semana: ${venta.SEMANA}",
-                    style: TextStyle(fontSize: 20),
+                    style: TextStyle(fontSize: 20.sp),
                   ),
                 ),
                 Expanded(
                   child: Text(
                     "Movimientos: ${venta.MOVIMIENTOS}",
-                    style: TextStyle(fontSize: 20),
+                    style: TextStyle(fontSize: 20.sp),
                   ),
                 ),
                 Expanded(
                   child: Text(
                     "Valor: ${venta.VALOR}",
-                    style: TextStyle(fontSize: 20),
+                    style: TextStyle(fontSize: 20.sp),
                   ),
                 ),
               ],
@@ -157,25 +158,25 @@ class VentaItem extends ConsumerWidget {
                 Expanded(
                   child: Text(
                     "Valor USD: ${venta.VALOR_USD}",
-                    style: TextStyle(fontSize: 20),
+                    style: TextStyle(fontSize: 20.sp),
                   ),
                 ),
                 Expanded(
                   child: Text(
                     "Filial: ${venta.FILIAL}",
-                    style: TextStyle(fontSize: 20),
+                    style: TextStyle(fontSize: 20.sp),
                   ),
                 ),
                 Expanded(
                   child: Text(
                     "Cantidad: ${venta.CANTIDAD}",
-                    style: TextStyle(fontSize: 20),
+                    style: TextStyle(fontSize: 20.sp),
                   ),
                 ),
                 Expanded(
                   child: Text(
                     "Cancelado: ${venta.CANCELADO}",
-                    style: TextStyle(fontSize: 20),
+                    style: TextStyle(fontSize: 20.sp),
                   ),
                 ),
               ],
