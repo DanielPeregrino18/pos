@@ -7,7 +7,7 @@ import 'package:pos/config/DI/Dependencias.dart';
 import 'package:pos/routes/routes.dart';
 Future<void> main() async {
 
-  //Se usa esta linea si flutter necesita llamar al codigo nativo antes de llamar runapp
+  //Se usa esta linea si flutter necesita llamar al código nativo antes de llamar run app
   WidgetsFlutterBinding.ensureInitialized();
   //Inicializa la conexion con la base de datos
   final objectbox = await ObjectboxConnection.create();
@@ -30,7 +30,7 @@ class MyApp extends ConsumerWidget {
       title: "POS",
       theme: ThemeData(
         useMaterial3: true,
-        colorScheme: ref.watch(colorSchemeProvider)  //Obtiene el tema del provedor de estados
+        colorScheme: ref.watch(colorSchemeProvider)  //Obtiene el tema del proveedor de estados
       ),
       routerConfig: ref.read(routerProvider), //Obtiene las rutas del proveedor
     );
