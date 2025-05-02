@@ -1,13 +1,13 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'models.dart';
 
-part 'api_service_response.g.dart';
+part 'api_clientes_response.g.dart';
 
 @JsonSerializable()
 class ApiClientesResponse {
   final List<Almacen> almacenes;
 
-  final Map<String, dynamic> prioridades;
+  final List<dynamic> prioridades;
 
   final List<Cliente> clientes;
 
@@ -15,7 +15,7 @@ class ApiClientesResponse {
 
   final List<ListaPrecios> lista_precios;
 
-  final Map<String, dynamic> tipo_entrega;
+  final List<dynamic> tipo_entrega;
 
   final List<Domicilio> domicilios;
 
@@ -41,8 +41,11 @@ class ApiClientesResponse {
     required this.idMovP,
   });
 
-  factory ApiClientesResponse.fromJson(Map<String, dynamic> json) =>
-      _$ApiClientesResponseFromJson(json);
+  factory ApiClientesResponse.fromJson(Map<String, dynamic> json) {
+    return _$ApiClientesResponseFromJson(json);
+  }
 
-  Map<String, dynamic> toJson() => _$ApiClientesResponseToJson(this);
+  Map<String, dynamic> toJson() {
+    return _$ApiClientesResponseToJson(this);
+  }
 }

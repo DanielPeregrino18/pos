@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
-import 'package:pos/data/modelos/api_service_response_models/api_service_response.dart';
+import 'package:pos/data/modelos/api_service_response_models/api_clientes_response.dart';
 
 part 'api_clientes.g.dart';
 
@@ -15,9 +15,9 @@ abstract class ApiClientes {
   factory ApiClientes(Dio dio) = _ApiClientes;
 
   @GET('operaciones/POSopCotPed/OnLoadPedCot')
-  Future<ApiClientesResponse> getData(
-    @Query('idSucursal') String idSucursal,
-    @Query('idCaja') String idCaja,
+  Future<List<ApiClientesResponse>> getData(
+    @Query('idSucursal') int idSucursal,
+    @Query('idCaja') int idCaja,
     @Query('conn') String conn,
   );
 }
