@@ -55,6 +55,13 @@ class DrawerPos extends ConsumerWidget {
                     label: Text("Reportes", style: TextStyle(fontSize: 30.sp)),
                     icon: Icon(Icons.feed_sharp, size: 30),
                   ),
+                  TextButton.icon(
+                    onPressed: () {
+                      context.go("/clientes");
+                    },
+                    label: Text("Clientes", style: TextStyle(fontSize: 30.sp)),
+                    icon: Icon(Icons.person, size: 30),
+                  ),
                   Divider(),
                   TextButton.icon(
                     onPressed: () {

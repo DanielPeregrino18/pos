@@ -235,7 +235,7 @@ final _entities = <obx_int.ModelEntity>[
   obx_int.ModelEntity(
       id: const obx_int.IdUid(15, 4708300723691210105),
       name: 'DomicilioOB',
-      lastPropertyId: const obx_int.IdUid(8, 4952716969853888965),
+      lastPropertyId: const obx_int.IdUid(9, 3771099292028894637),
       flags: 0,
       properties: <obx_int.ModelProperty>[
         obx_int.ModelProperty(
@@ -372,7 +372,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
       lastEntityId: const obx_int.IdUid(17, 8228667060596273833),
-      lastIndexId: const obx_int.IdUid(4, 5330336020163595312),
+      lastIndexId: const obx_int.IdUid(5, 1523992679733062373),
       lastRelationId: const obx_int.IdUid(3, 497114194251762227),
       lastSequenceId: const obx_int.IdUid(0, 0),
       retiredEntityUids: const [
@@ -385,7 +385,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
         8445508603454430333,
         2364328694780968366
       ],
-      retiredIndexUids: const [5952045895011704472],
+      retiredIndexUids: const [5952045895011704472, 1523992679733062373],
       retiredPropertyUids: const [
         3966460281539830874,
         309569487768899047,
@@ -430,7 +430,8 @@ obx_int.ModelDefinition getObjectBoxModel() {
         7154152480954986841,
         5270499872387694498,
         5797288676294510682,
-        1405347482737780790
+        1405347482737780790,
+        3771099292028894637
       ],
       retiredRelationUids: const [7334335245334417135],
       modelVersion: 5,
@@ -690,7 +691,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
           final ciudadOffset = fbb.writeString(object.ciudad);
           final c_pOffset = fbb.writeString(object.c_p);
           final estadoOffset = fbb.writeString(object.estado);
-          fbb.startTable(9);
+          fbb.startTable(10);
           fbb.addInt64(0, object.id);
           fbb.addInt64(1, object.id_Cliente);
           fbb.addOffset(2, domicilioOffset);

@@ -1,4 +1,5 @@
 import 'package:objectbox/objectbox.dart';
+import 'package:pos/domain/entities/cliente.dart';
 
 @Entity()
 class DomicilioOB {
@@ -12,6 +13,8 @@ class DomicilioOB {
   String c_p;
   int plazo;
   String estado;
+
+  //final clienteOB = ToOne<ClienteOB>();
 
   DomicilioOB({
     this.id = 0,

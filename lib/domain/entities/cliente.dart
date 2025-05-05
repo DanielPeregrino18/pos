@@ -1,4 +1,5 @@
 import 'package:objectbox/objectbox.dart';
+import 'package:pos/domain/entities/domicilio.dart';
 
 @Entity()
 class ClienteOB {
@@ -18,6 +19,9 @@ class ClienteOB {
   int id_lista;
 
   String cfdi;
+
+  // @Backlink('clienteOB')
+  // final domicilios = ToMany<DomicilioOB>();
 
   ClienteOB({
     this.id = 0,

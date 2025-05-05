@@ -2,7 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter/material.dart';
 import 'package:pos/presentation/pages/ajustes/ajustes.dart';
-import 'package:pos/presentation/pages/clientes/clientes.dart';
+import 'package:pos/presentation/pages/clientes/clientes_screen.dart';
 import 'package:pos/presentation/pages/login/login.dart';
 import 'package:pos/presentation/pages/productos/update_producto.dart';
 import 'package:pos/presentation/pages/reportes/reporte_ventas.dart';
@@ -17,7 +17,7 @@ final routerProvider = Provider<GoRouter>((ref) {
 
   final GoRouter _router = GoRouter(
     routerNeglect: true,
-    initialLocation: "/clientes", //Ruta inicial de la aplicación
+    initialLocation: "/pos", //Ruta inicial de la aplicación
     routes: <RouteBase>[
       GoRoute(
         path: '/',   //ruta
