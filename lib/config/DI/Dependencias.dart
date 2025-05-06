@@ -4,14 +4,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:pos/core/dao/DetalleVentaDAO.dart';
 import 'package:pos/core/dao/ProductoDAO.dart';
+import 'package:pos/core/dao/datos_generales/dao/domicilio_dao.dart';
 import 'package:pos/core/dao/datos_generales/dao/lista_precios_dao.dart';
 import 'package:pos/core/dao/datos_generales/datos_generales.dart';
 import 'package:pos/core/encriptado/SecureStorage.dart';
 import 'package:pos/core/servicios/DetalleVentaServicio.dart';
 import 'package:pos/core/servicios/ProductoServicio.dart';
 import 'package:pos/core/servicios/datos_generales/datos_generales.dart';
-import 'package:pos/core/servicios/datos_generales/servicios/almacenes_servicio.dart';
-import 'package:pos/core/servicios/datos_generales/servicios/clientes_servicio.dart';
+import 'package:pos/core/servicios/datos_generales/servicios/domicilios_servicio.dart';
 import 'package:pos/core/servicios/datos_generales/servicios/lista_precios_servicio.dart';
 import 'package:pos/data/modelos/Venta.dart';
 import 'package:pos/data/repositorios/DetalleVentaDAOObjectBoxImpl.dart';
@@ -110,4 +110,13 @@ final listaPreciosDaoImplProvider = Provider<ListaPreciosLDBDao>(
 
 final listaPreciosServicioProvider = Provider<ListaPreciosServicio>(
   (ref) => ListaPreciosServicio(ref.read(listaPreciosDaoImplProvider)),
+);
+
+// DOMICILIOS
+final domiciliosDaoImplProvider = Provider<DomicilioLDBDao>(
+  (ref) => DomicilioDAOObjectBoxImpl(ref.read(objectBoxProvider)),
+);
+
+final domiciliosServicioProvider = Provider<DomicilioServicio>(
+  (ref) => DomicilioServicio(ref.read(domiciliosDaoImplProvider)),
 );

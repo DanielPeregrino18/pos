@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pos/config/DI/Dependencias.dart';
 import 'package:pos/core/servicios/datos_generales/servicios/lista_precios_servicio.dart';
-import 'package:pos/domain/entities/entities.dart';
+import 'package:pos/domain/entities/lista_precios.dart';
 import 'package:pos/presentation/viewmodels/general_purpose.dart';
 
 class ListaPreciosViewModel extends ChangeNotifier {

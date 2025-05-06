@@ -1,4 +1,4 @@
-import 'package:pos/domain/entities/entities.dart';
+import 'package:pos/domain/entities/lista_precios.dart';
 
 // LDB = Local Database
 

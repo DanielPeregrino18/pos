@@ -5,7 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:pos/data/modelos/api_service_response_models/api_clientes_response.dart';
 import 'package:pos/presentation/pages/clientes/widgets/clientes_app_bar.dart';
 import 'package:pos/presentation/viewmodels/ClientesViewModel.dart';
-import 'package:pos/presentation/viewmodels/general_data/view_models/lista_precios_viewmodel.dart';
+import 'package:pos/presentation/viewmodels/general_data/view_models/domicilios_viewmodel.dart';
 import 'package:pos/presentation/widgets/drawer_pos.dart';
 import 'package:pos/data/modelos/api_service_response_models/models.dart';
 import 'package:pos/domain/entities/entities.dart';
@@ -51,20 +51,6 @@ class _ClientesState extends ConsumerState<Clientes> {
 
     _isLoading();
   }
-
-  /*
-  1. Almacenes
-  2. Prioridades
-  3. Clientes
-  4. Monedas
-  5. Lista de precios
-  6. Tipo de entrega
-  7. Domicilios
-  8. Vendedores
-  9. paridad
-  10. idMovC
-  11. idMovP
-  */
 
   _guardarAlmacenes(List<Almacen> almacenes) {
     if (almacenes.isNotEmpty) {
@@ -136,7 +122,7 @@ class _ClientesState extends ConsumerState<Clientes> {
     }
   }
 
-  _guardarPrecios(List<ListaPrecios> listaPrecios) {
+  _guardarListaPrecios(List<ListaPrecios> listaPrecios) {
     if (listaPrecios.isNotEmpty) {
       for (ListaPrecios precio in listaPrecios) {
         ListaPreciosOB precioOB = ListaPreciosOB(
@@ -156,6 +142,62 @@ class _ClientesState extends ConsumerState<Clientes> {
       }
     } else {
       debugPrint("No hay precios para guardar");
+    }
+  }
+
+  _guardarDomicilios(List<Domicilio> domicilios) {
+    if (domicilios.isNotEmpty) {
+      for (Domicilio domicilio in domicilios) {
+        DomicilioOB domicilioOB = DomicilioOB(
+          id_Cliente: domicilio.id_Cliente,
+          domicilio: domicilio.domicilio,
+          colonia: domicilio.colonia,
+          ciudad: domicilio.ciudad,
+          c_p: domicilio.c_p,
+          plazo: domicilio.plazo,
+          estado: domicilio.estado,
+        );
+
+        bool result = ref
+            .read(domiciliosVMProvider)
+            .agregarDomicilioLDB(domicilioOB);
+
+        if (result == false) {
+          debugPrint("Error: Precio no registrado");
+        }
+      }
+    } else {
+      debugPrint("No hay domicilios para guardar");
+    }
+  }
+
+
+
+  void _guardarDatos(List<ApiClientesResponse> datos) {
+    try {
+      // TODO: LLamar a las funciones para guardar los datos
+
+      /*
+      1. Almacenes
+      2. Prioridades
+      3. Clientes
+      4. Monedas
+      5. Lista de precios
+      6. Tipo de entrega
+      7. Domicilios
+      8. Vendedores
+      9. paridad
+      10. idMovC
+      11. idMovP
+      */
+
+      _guardarAlmacenes(datos[0].almacenes);
+      _guardarClientes(datos[0].clientes);
+      _guardarMonedas(datos[0].moneda);
+      _guardarListaPrecios(datos[0].lista_precios);
+      _guardarDomicilios(datos[0].domicilios);
+    } catch (e) {
+      debugPrint('$e');
     }
   }
 
@@ -250,6 +292,7 @@ class _ClientesState extends ConsumerState<Clientes> {
                     }
                     // _guardarClientes(datos[0].clientes);
                     // _guardarAlmacenes(datos[0].almacenes);
+                    _guardarDatos(datos);
                   },
                   tooltip: "Guardar datos",
                   child: Icon(Icons.save),
