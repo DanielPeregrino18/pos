@@ -1,5 +1,5 @@
 import 'package:pos/config/DB/ObjectboxConnection.dart';
-import 'package:pos/core/dao/datos_generales/almacen_dao.dart';
+import 'package:pos/core/dao/datos_generales/dao/almacen_dao.dart';
 import 'package:pos/domain/entities/almacen.dart';
 import 'package:pos/objectbox.g.dart';
 
@@ -59,7 +59,7 @@ class AlmacenDAOObjectboxImpl extends AlmacenLDBDao {
   List<AlmacenOB> existeAlmacenPorIdLDB(int idAlmacenOB) {
     final almacenesLDB = _connectionDB.almacenBox;
     return almacenesLDB
-        .query(AlmacenOB_.id.equals(idAlmacenOB))
+        .query(AlmacenOB_.id_almacen.equals(idAlmacenOB))
         .build()
         .find();
   }

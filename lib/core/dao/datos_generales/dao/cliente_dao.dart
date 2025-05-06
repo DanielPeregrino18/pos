@@ -13,5 +13,5 @@ abstract class ClienteLDBDao {
 
   bool updateClienteLDB(ClienteOB clienteOB);
 
-  List<ClienteOB> existeClientePorRFCLDB(String RFC);
+  List<ClienteOB> existeClientePorIdLDB(int clienteId);
 }

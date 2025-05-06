@@ -4,17 +4,19 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:pos/core/dao/DetalleVentaDAO.dart';
 import 'package:pos/core/dao/ProductoDAO.dart';
-import 'package:pos/core/dao/datos_generales/almacen_dao.dart';
-import 'package:pos/core/dao/datos_generales/cliente_dao.dart';
+import 'package:pos/core/dao/datos_generales/dao/lista_precios_dao.dart';
+import 'package:pos/core/dao/datos_generales/datos_generales.dart';
 import 'package:pos/core/encriptado/SecureStorage.dart';
 import 'package:pos/core/servicios/DetalleVentaServicio.dart';
 import 'package:pos/core/servicios/ProductoServicio.dart';
-import 'package:pos/core/servicios/datos_generales/almacen_servicio.dart';
-import 'package:pos/core/servicios/datos_generales/clientes_servicio.dart';
+import 'package:pos/core/servicios/datos_generales/datos_generales.dart';
+import 'package:pos/core/servicios/datos_generales/servicios/almacenes_servicio.dart';
+import 'package:pos/core/servicios/datos_generales/servicios/clientes_servicio.dart';
+import 'package:pos/core/servicios/datos_generales/servicios/lista_precios_servicio.dart';
 import 'package:pos/data/modelos/Venta.dart';
 import 'package:pos/data/repositorios/DetalleVentaDAOObjectBoxImpl.dart';
 import 'package:pos/data/repositorios/ProductoDAOObjectboxImpl.dart';
-import 'package:pos/data/repositorios/datos_generales/datos_generales_dao_objectbox.impl.dart';
+import 'package:pos/data/repositorios/datos_generales/datos_generales.dart';
 import '../../data/modelos/Claim.dart';
 import '../DB/ObjectboxConnection.dart';
 
@@ -84,9 +86,28 @@ final clienteServicioProvider = Provider<ClienteServicio>(
 
 // ALMACENES
 final almacenDaoImplProvider = Provider<AlmacenLDBDao>(
-    (ref) => AlmacenDAOObjectboxImpl(ref.read(objectBoxProvider)),
+  (ref) => AlmacenDAOObjectboxImpl(ref.read(objectBoxProvider)),
 );
 
 final almacenServicioProvider = Provider<AlmacenServicio>(
   (ref) => AlmacenServicio(ref.read(almacenDaoImplProvider)),
+);
+
+// MONEDA
+final monedaDaoImplProvider = Provider<MonedaLDBDao>(
+  (ref) => MonedaDaoObjectBoxImpl(ref.read(objectBoxProvider)),
+);
+
+final monedaServicioProvider = Provider<MonedaServicio>(
+  (ref) => MonedaServicio(ref.read(monedaDaoImplProvider)),
+);
+
+// LISTA DE PRECIOS
+
+final listaPreciosDaoImplProvider = Provider<ListaPreciosLDBDao>(
+  (ref) => ListaPreciosDAOObjectBoxImpl(ref.read(objectBoxProvider)),
+);
+
+final listaPreciosServicioProvider = Provider<ListaPreciosServicio>(
+  (ref) => ListaPreciosServicio(ref.read(listaPreciosDaoImplProvider)),
 );

@@ -3,8 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pos/data/modelos/api_service_response_models/api_clientes_response.dart';
-import 'package:pos/presentation/pages/clientes/clientes.dart';
+import 'package:pos/presentation/pages/clientes/widgets/clientes_app_bar.dart';
 import 'package:pos/presentation/viewmodels/ClientesViewModel.dart';
+import 'package:pos/presentation/viewmodels/general_data/view_models/lista_precios_viewmodel.dart';
 import 'package:pos/presentation/widgets/drawer_pos.dart';
 import 'package:pos/data/modelos/api_service_response_models/models.dart';
 import 'package:pos/domain/entities/entities.dart';
@@ -51,6 +52,42 @@ class _ClientesState extends ConsumerState<Clientes> {
     _isLoading();
   }
 
+  /*
+  1. Almacenes
+  2. Prioridades
+  3. Clientes
+  4. Monedas
+  5. Lista de precios
+  6. Tipo de entrega
+  7. Domicilios
+  8. Vendedores
+  9. paridad
+  10. idMovC
+  11. idMovP
+  */
+
+  _guardarAlmacenes(List<Almacen> almacenes) {
+    if (almacenes.isNotEmpty) {
+      for (Almacen alm in almacenes) {
+        AlmacenOB almacenOB = AlmacenOB(
+          id_almacen: alm.id_almacen,
+          nombre: alm.nombre,
+          nombreOrden: alm.nombreOrden,
+        );
+
+        bool result = ref.read(almacenesVMProvider).agregarAlmacen(almacenOB);
+
+        if (result == false) {
+          debugPrint(
+            "Almacen no registrado, id_almacen duplicado: ${almacenOB.id_almacen}",
+          );
+        }
+      }
+    } else {
+      debugPrint("No hay almacenes para guardar");
+    }
+  }
+
   _guardarClientes(List<Cliente> clientes) {
     if (clientes.isNotEmpty) {
       for (Cliente cliente in clientes) {
@@ -67,7 +104,9 @@ class _ClientesState extends ConsumerState<Clientes> {
         bool result = ref.read(clientesVMProvider).agregarCliente(clienteOB);
 
         if (result == false) {
-          debugPrint("Cliente no registrado, RFC duplicado: ${clienteOB.RFC}");
+          debugPrint(
+            "Cliente no registrado, id_Cliente duplicado: ${clienteOB.id_Cliente}",
+          );
         }
       }
     } else {
@@ -75,23 +114,48 @@ class _ClientesState extends ConsumerState<Clientes> {
     }
   }
 
-  _guardarAlmacenes(List<Almacen> almacenes) {
-    if (almacenes.isNotEmpty) {
-      for (Almacen alm in almacenes) {
-        AlmacenOB almacenOB = AlmacenOB(
-          id_almacen: alm.id_almacen,
-          nombre: alm.nombre,
-          nombreOrden: alm.nombreOrden,
+  _guardarMonedas(List<Moneda> monedas) {
+    if (monedas.isNotEmpty) {
+      for (Moneda moneda in monedas) {
+        MonedaOB monedaOB = MonedaOB(
+          IdMoneda: moneda.IdMoneda,
+          Nombre: moneda.Nombre,
+          Clave_SAT: moneda.Clave_SAT,
         );
 
-        bool result = ref.read(almacenesVMProvider).agregarAlmacen(almacenOB);
+        bool result = ref.read(monedaVMProvider).agregarMoneda(monedaOB);
 
         if (result == false) {
-          debugPrint("Almacen no registrado, id_almacen duplicado: ${almacenOB.id_almacen}");
+          debugPrint(
+            "Moneda no registrada, id_Moneda duplicada: ${monedaOB.IdMoneda}",
+          );
         }
       }
     } else {
-      debugPrint("No hay almacenes para guardar");
+      debugPrint("No hay monedas para guardar");
+    }
+  }
+
+  _guardarPrecios(List<ListaPrecios> listaPrecios) {
+    if (listaPrecios.isNotEmpty) {
+      for (ListaPrecios precio in listaPrecios) {
+        ListaPreciosOB precioOB = ListaPreciosOB(
+          ID_LISTA: precio.ID_LISTA,
+          NOMBRE: precio.NOMBRE,
+        );
+
+        bool result = ref
+            .read(listaPreciosVMProvider)
+            .agregarPrecioLDB(precioOB);
+
+        if (result == false) {
+          debugPrint(
+            "Precio no registrado, ID_LISTA duplicado: ${precioOB.ID_LISTA}",
+          );
+        }
+      }
+    } else {
+      debugPrint("No hay precios para guardar");
     }
   }
 
@@ -148,11 +212,11 @@ class _ClientesState extends ConsumerState<Clientes> {
                             children: [
                               Text(
                                 "Razón Social: ${clienteOB.razon_Social}",
-                                style: TextStyle(fontSize: 20),
+                                style: TextStyle(fontSize: 16),
                               ),
                               Text(
                                 "RFC: ${clienteOB.RFC}",
-                                style: TextStyle(fontSize: 20),
+                                style: TextStyle(fontSize: 16),
                               ),
                             ],
                           ),
@@ -185,7 +249,7 @@ class _ClientesState extends ConsumerState<Clientes> {
                       return;
                     }
                     // _guardarClientes(datos[0].clientes);
-                    _guardarAlmacenes(datos[0].almacenes);
+                    // _guardarAlmacenes(datos[0].almacenes);
                   },
                   tooltip: "Guardar datos",
                   child: Icon(Icons.save),

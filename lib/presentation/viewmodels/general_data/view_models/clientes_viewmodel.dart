@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pos/config/DI/Dependencias.dart';
-import 'package:pos/core/servicios/datos_generales/clientes_servicio.dart';
+import 'package:pos/core/servicios/datos_generales/servicios/clientes_servicio.dart';
 import 'package:pos/domain/entities/cliente.dart';
 import 'package:pos/presentation/viewmodels/general_purpose.dart';
 

@@ -1,4 +1,4 @@
-import 'package:pos/core/dao/datos_generales/almacen_dao.dart';
+import 'package:pos/core/dao/datos_generales/dao/almacen_dao.dart';
 import 'package:pos/domain/entities/almacen.dart';
 
 class AlmacenServicio {
@@ -12,7 +12,7 @@ class AlmacenServicio {
 
   bool agregarAlmacenLDB(AlmacenOB almacenOB) {
     if (almacenRepositorio
-        .existeAlmacenPorIdLDB(almacenOB.id)
+        .existeAlmacenPorIdLDB(almacenOB.id_almacen)
         .isNotEmpty) {
       return false;
     }

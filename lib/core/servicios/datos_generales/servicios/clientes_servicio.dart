@@ -1,4 +1,4 @@
-import 'package:pos/core/dao/datos_generales/cliente_dao.dart';
+import 'package:pos/core/dao/datos_generales/dao/cliente_dao.dart';
 import 'package:pos/domain/entities/cliente.dart';
 
 class ClienteServicio {
@@ -11,7 +11,9 @@ class ClienteServicio {
   }
 
   bool agregarClienteLDB(ClienteOB clienteOB) {
-    if (clienteRepositorio.existeClientePorRFCLDB(clienteOB.RFC).isNotEmpty) {
+    if (clienteRepositorio
+        .existeClientePorIdLDB(clienteOB.id_Cliente)
+        .isNotEmpty) {
       return false;
     }
     return clienteRepositorio.agregarClienteLDB(clienteOB);
@@ -31,12 +33,12 @@ class ClienteServicio {
   }
 
   bool updateCliente(ClienteOB clienteOB) {
-    List<ClienteOB> clientePorRFC = clienteRepositorio.existeClientePorRFCLDB(
-      clienteOB.RFC,
+    List<ClienteOB> clientePorId = clienteRepositorio.existeClientePorIdLDB(
+      clienteOB.id_Cliente,
     );
 
-    if (clientePorRFC.isNotEmpty) {
-      if (clientePorRFC[0].RFC != clienteOB.RFC) {
+    if (clientePorId.isNotEmpty) {
+      if (clientePorId[0].id_Cliente != clienteOB.id_Cliente) {
         return false;
       }
     }

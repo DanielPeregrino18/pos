@@ -1,5 +1,5 @@
 import 'package:pos/config/DB/ObjectboxConnection.dart';
-import 'package:pos/core/dao/datos_generales/cliente_dao.dart';
+import 'package:pos/core/dao/datos_generales/dao/cliente_dao.dart';
 import 'package:pos/domain/entities/cliente.dart';
 import 'package:pos/objectbox.g.dart';
 
@@ -56,11 +56,11 @@ class ClienteDAOObjectboxImpl extends ClienteLDBDao {
   }
 
   @override
-  List<ClienteOB> existeClientePorRFCLDB(String RFC) {
+  List<ClienteOB> existeClientePorIdLDB(int clienteId) {
     final clientesLDB = _connectionDB.clienteBox;
 
     Query<ClienteOB> query =
-        clientesLDB.query(ClienteOB_.RFC.equals(RFC)).build();
+        clientesLDB.query(ClienteOB_.id_Cliente.equals(clienteId)).build();
     return query.find();
   }
 }
