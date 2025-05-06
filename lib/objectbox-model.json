@@ -315,9 +315,62 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "23:2426785436163135305",
+      "lastPropertyId": "3:3138769517818699695",
+      "name": "VendedorOB",
+      "properties": [
+        {
+          "id": "1:8948292405233867024",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:887054370012710738",
+          "name": "id_Usuario",
+          "type": 6
+        },
+        {
+          "id": "3:3138769517818699695",
+          "name": "nombre",
+          "type": 9
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "24:2025998127013023642",
+      "lastPropertyId": "4:1253294544454320601",
+      "name": "CifrasOB",
+      "properties": [
+        {
+          "id": "1:4077891324018901880",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:9010439825045337533",
+          "name": "paridad",
+          "type": 8
+        },
+        {
+          "id": "3:2517840019426401436",
+          "name": "idMovC",
+          "type": 6
+        },
+        {
+          "id": "4:1253294544454320601",
+          "name": "idMovP",
+          "type": 6
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "22:4073173236508368864",
+  "lastEntityId": "24:2025998127013023642",
   "lastIndexId": "5:1523992679733062373",
   "lastRelationId": "3:497114194251762227",
   "lastSequenceId": "0:0",

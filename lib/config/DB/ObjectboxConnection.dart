@@ -5,9 +5,7 @@ import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 import 'package:pos/data/modelos/detalleVenta.dart';
 
-
-
-class ObjectboxConnection{
+class ObjectboxConnection {
   late final Store _store;
 
   late final Box<Producto> produtoBox;
@@ -18,6 +16,8 @@ class ObjectboxConnection{
   late final Box<DomicilioOB> domicilioBox;
   late final Box<ListaPreciosOB> listaPreciosBox;
   late final Box<MonedaOB> monedaBox;
+  late final Box<VendedorOB> vendedorBox;
+  late final Box<CifrasOB> cifrasBox;
 
   //Obtiene las conexiones al as bases de datos.
   ObjectboxConnection._create(this._store) {
@@ -28,13 +28,17 @@ class ObjectboxConnection{
     domicilioBox = Box<DomicilioOB>(_store);
     listaPreciosBox = Box<ListaPreciosOB>(_store);
     monedaBox = Box<MonedaOB>(_store);
+    vendedorBox = Box<VendedorOB>(_store);
+    cifrasBox = Box<CifrasOB>(_store);
   }
   static Future<ObjectboxConnection> create() async {
     final store = await openStore(
-        directory:
-        p.join((await getApplicationDocumentsDirectory()).path, "obx-demo"),
-        macosApplicationGroup: "objectbox.demo");
+      directory: p.join(
+        (await getApplicationDocumentsDirectory()).path,
+        "obx-demo",
+      ),
+      macosApplicationGroup: "objectbox.demo",
+    );
     return ObjectboxConnection._create(store);
   }
-
 }

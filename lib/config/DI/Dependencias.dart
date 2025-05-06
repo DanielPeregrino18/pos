@@ -4,19 +4,16 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:pos/core/dao/DetalleVentaDAO.dart';
 import 'package:pos/core/dao/ProductoDAO.dart';
-import 'package:pos/core/dao/datos_generales/dao/domicilio_dao.dart';
-import 'package:pos/core/dao/datos_generales/dao/lista_precios_dao.dart';
 import 'package:pos/core/dao/datos_generales/datos_generales.dart';
 import 'package:pos/core/encriptado/SecureStorage.dart';
 import 'package:pos/core/servicios/DetalleVentaServicio.dart';
 import 'package:pos/core/servicios/ProductoServicio.dart';
 import 'package:pos/core/servicios/datos_generales/datos_generales.dart';
-import 'package:pos/core/servicios/datos_generales/servicios/domicilios_servicio.dart';
-import 'package:pos/core/servicios/datos_generales/servicios/lista_precios_servicio.dart';
 import 'package:pos/data/modelos/Venta.dart';
 import 'package:pos/data/repositorios/DetalleVentaDAOObjectBoxImpl.dart';
 import 'package:pos/data/repositorios/ProductoDAOObjectboxImpl.dart';
 import 'package:pos/data/repositorios/datos_generales/datos_generales.dart';
+import 'package:pos/data/repositorios/datos_generales/repositorios/cifras_dao_objectbox_impl.dart';
 import '../../data/modelos/Claim.dart';
 import '../DB/ObjectboxConnection.dart';
 
@@ -119,4 +116,22 @@ final domiciliosDaoImplProvider = Provider<DomicilioLDBDao>(
 
 final domiciliosServicioProvider = Provider<DomicilioServicio>(
   (ref) => DomicilioServicio(ref.read(domiciliosDaoImplProvider)),
+);
+
+// VENDEDORES
+final vendedoresDaoImplProvider = Provider<VendedorLDBDao>(
+  (ref) => VendedorDAOObjectboxImpl(ref.read(objectBoxProvider)),
+);
+
+final vendedoresServicioProvider = Provider<VendedorServicio>(
+  (ref) => VendedorServicio(ref.read(vendedoresDaoImplProvider)),
+);
+
+// CIFRAS
+final cifrasDaoImplProvider = Provider<CifrasLDBDao>(
+  (ref) => CifrasDAOOBjectboxImpl(ref.read(objectBoxProvider)),
+);
+
+final cifrasServicioProvider = Provider<CifrasServicio>(
+  (ref) => CifrasServicio(ref.read(cifrasDaoImplProvider)),
 );

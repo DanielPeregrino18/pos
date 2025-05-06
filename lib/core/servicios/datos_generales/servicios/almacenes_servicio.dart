@@ -30,7 +30,7 @@ class AlmacenServicio {
     if (almacenOB != null) {
       return almacenOB;
     } else {
-      throw Exception("almacen no encontrado");
+      throw Exception("Almacen no encontrado");
     }
   }
 

@@ -17,10 +17,12 @@ import 'package:objectbox_flutter_libs/objectbox_flutter_libs.dart';
 import 'data/modelos/detalleVenta.dart';
 import 'data/modelos/producto.dart';
 import 'domain/entities/almacen.dart';
+import 'domain/entities/cifras.dart';
 import 'domain/entities/cliente.dart';
 import 'domain/entities/domicilio.dart';
 import 'domain/entities/lista_precios.dart';
 import 'domain/entities/moneda.dart';
+import 'domain/entities/vendedor.dart';
 
 export 'package:objectbox/objectbox.dart'; // so that callers only have to import this file
 
@@ -333,6 +335,59 @@ final _entities = <obx_int.ModelEntity>[
             flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(23, 2426785436163135305),
+      name: 'VendedorOB',
+      lastPropertyId: const obx_int.IdUid(3, 3138769517818699695),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 8948292405233867024),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 887054370012710738),
+            name: 'id_Usuario',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 3138769517818699695),
+            name: 'nombre',
+            type: 9,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(24, 2025998127013023642),
+      name: 'CifrasOB',
+      lastPropertyId: const obx_int.IdUid(4, 1253294544454320601),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 4077891324018901880),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 9010439825045337533),
+            name: 'paridad',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 2517840019426401436),
+            name: 'idMovC',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 1253294544454320601),
+            name: 'idMovP',
+            type: 6,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
 ];
 
@@ -371,7 +426,7 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(22, 4073173236508368864),
+      lastEntityId: const obx_int.IdUid(24, 2025998127013023642),
       lastIndexId: const obx_int.IdUid(5, 1523992679733062373),
       lastRelationId: const obx_int.IdUid(3, 497114194251762227),
       lastSequenceId: const obx_int.IdUid(0, 0),
@@ -834,6 +889,73 @@ obx_int.ModelDefinition getObjectBoxModel() {
               Clave_SAT: Clave_SATParam);
 
           return object;
+        }),
+    VendedorOB: obx_int.EntityDefinition<VendedorOB>(
+        model: _entities[9],
+        toOneRelations: (VendedorOB object) => [],
+        toManyRelations: (VendedorOB object) => {},
+        getId: (VendedorOB object) => object.id,
+        setId: (VendedorOB object, int id) {
+          object.id = id;
+        },
+        objectToFB: (VendedorOB object, fb.Builder fbb) {
+          final nombreOffset = fbb.writeString(object.nombre);
+          fbb.startTable(4);
+          fbb.addInt64(0, object.id);
+          fbb.addInt64(1, object.id_Usuario);
+          fbb.addOffset(2, nombreOffset);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final id_UsuarioParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0);
+          final nombreParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 8, '');
+          final object = VendedorOB(
+              id: idParam, id_Usuario: id_UsuarioParam, nombre: nombreParam);
+
+          return object;
+        }),
+    CifrasOB: obx_int.EntityDefinition<CifrasOB>(
+        model: _entities[10],
+        toOneRelations: (CifrasOB object) => [],
+        toManyRelations: (CifrasOB object) => {},
+        getId: (CifrasOB object) => object.id,
+        setId: (CifrasOB object, int id) {
+          object.id = id;
+        },
+        objectToFB: (CifrasOB object, fb.Builder fbb) {
+          fbb.startTable(5);
+          fbb.addInt64(0, object.id);
+          fbb.addFloat64(1, object.paridad);
+          fbb.addInt64(2, object.idMovC);
+          fbb.addInt64(3, object.idMovP);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final paridadParam =
+              const fb.Float64Reader().vTableGet(buffer, rootOffset, 6, 0);
+          final idMovCParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0);
+          final idMovPParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0);
+          final object = CifrasOB(
+              id: idParam,
+              paridad: paridadParam,
+              idMovC: idMovCParam,
+              idMovP: idMovPParam);
+
+          return object;
         })
   };
 
@@ -1045,4 +1167,38 @@ class MonedaOB_ {
   /// See [MonedaOB.Clave_SAT].
   static final Clave_SAT =
       obx.QueryStringProperty<MonedaOB>(_entities[8].properties[3]);
+}
+
+/// [VendedorOB] entity fields to define ObjectBox queries.
+class VendedorOB_ {
+  /// See [VendedorOB.id].
+  static final id =
+      obx.QueryIntegerProperty<VendedorOB>(_entities[9].properties[0]);
+
+  /// See [VendedorOB.id_Usuario].
+  static final id_Usuario =
+      obx.QueryIntegerProperty<VendedorOB>(_entities[9].properties[1]);
+
+  /// See [VendedorOB.nombre].
+  static final nombre =
+      obx.QueryStringProperty<VendedorOB>(_entities[9].properties[2]);
+}
+
+/// [CifrasOB] entity fields to define ObjectBox queries.
+class CifrasOB_ {
+  /// See [CifrasOB.id].
+  static final id =
+      obx.QueryIntegerProperty<CifrasOB>(_entities[10].properties[0]);
+
+  /// See [CifrasOB.paridad].
+  static final paridad =
+      obx.QueryDoubleProperty<CifrasOB>(_entities[10].properties[1]);
+
+  /// See [CifrasOB.idMovC].
+  static final idMovC =
+      obx.QueryIntegerProperty<CifrasOB>(_entities[10].properties[2]);
+
+  /// See [CifrasOB.idMovP].
+  static final idMovP =
+      obx.QueryIntegerProperty<CifrasOB>(_entities[10].properties[3]);
 }

@@ -5,7 +5,6 @@ import 'package:go_router/go_router.dart';
 import 'package:pos/data/modelos/api_service_response_models/api_clientes_response.dart';
 import 'package:pos/presentation/pages/clientes/widgets/clientes_app_bar.dart';
 import 'package:pos/presentation/viewmodels/ClientesViewModel.dart';
-import 'package:pos/presentation/viewmodels/general_data/view_models/domicilios_viewmodel.dart';
 import 'package:pos/presentation/widgets/drawer_pos.dart';
 import 'package:pos/data/modelos/api_service_response_models/models.dart';
 import 'package:pos/domain/entities/entities.dart';
@@ -71,6 +70,14 @@ class _ClientesState extends ConsumerState<Clientes> {
       }
     } else {
       debugPrint("No hay almacenes para guardar");
+    }
+  }
+
+  _guardarPrioridades(List<dynamic> prioridades) {
+    if (prioridades.isNotEmpty) {
+      // Lógica para almacenar las prioridades
+    } else {
+      debugPrint("No hay prioridades para guardar");
     }
   }
 
@@ -145,6 +152,14 @@ class _ClientesState extends ConsumerState<Clientes> {
     }
   }
 
+  _guardarTipoEntrega(List<dynamic> tipoEntrega) {
+    if (tipoEntrega.isNotEmpty) {
+      // Lógica para almacenar las prioridades
+    } else {
+      debugPrint("No hay tipos de entrega para guardar");
+    }
+  }
+
   _guardarDomicilios(List<Domicilio> domicilios) {
     if (domicilios.isNotEmpty) {
       for (Domicilio domicilio in domicilios) {
@@ -171,7 +186,44 @@ class _ClientesState extends ConsumerState<Clientes> {
     }
   }
 
+  _guardarVendedores(List<Vendedor> vendedores) {
+    if (vendedores.isNotEmpty) {
+      for (Vendedor vendedor in vendedores) {
+        VendedorOB vendedorOB = VendedorOB(
+          id_Usuario: vendedor.id_Usuario,
+          nombre: vendedor.nombre,
+        );
 
+        bool result = ref.read(vendedorVMProvider).agregarVendedor(vendedorOB);
+
+        if (result == false) {
+          debugPrint(
+            "Vendedor no id_Usuario duplicado: ${vendedorOB.id_Usuario}",
+          );
+        }
+      }
+    } else {
+      debugPrint("No hay domicilios para guardar");
+    }
+  }
+
+  _guardarCifras(double paridad, int idMovC, int idMovp) {
+    CifrasOB cifrasOB = CifrasOB(
+      paridad: paridad,
+      idMovC: idMovC,
+      idMovP: idMovp,
+    );
+
+    try {
+      bool result = ref.read(cifrasVMProvider).agregarCifras(cifrasOB);
+
+      if (result == false) {
+        debugPrint("Error: cifras no registradas");
+      }
+    } catch (e) {
+      debugPrint("Error: cifras no registradas");
+    }
+  }
 
   void _guardarDatos(List<ApiClientesResponse> datos) {
     try {
@@ -179,11 +231,11 @@ class _ClientesState extends ConsumerState<Clientes> {
 
       /*
       1. Almacenes
-      2. Prioridades
+      2. Prioridades *
       3. Clientes
       4. Monedas
       5. Lista de precios
-      6. Tipo de entrega
+      6. Tipo de entrega *
       7. Domicilios
       8. Vendedores
       9. paridad
@@ -192,10 +244,14 @@ class _ClientesState extends ConsumerState<Clientes> {
       */
 
       _guardarAlmacenes(datos[0].almacenes);
+      _guardarPrioridades(datos[0].prioridades);
       _guardarClientes(datos[0].clientes);
       _guardarMonedas(datos[0].moneda);
       _guardarListaPrecios(datos[0].lista_precios);
+      _guardarTipoEntrega(datos[0].tipo_entrega);
       _guardarDomicilios(datos[0].domicilios);
+      _guardarVendedores(datos[0].vendedores);
+      _guardarCifras(datos[0].paridad, datos[0].idMovC, datos[0].idMovP);
     } catch (e) {
       debugPrint('$e');
     }
@@ -290,8 +346,6 @@ class _ClientesState extends ConsumerState<Clientes> {
                       debugPrint("No hay datos para guardar");
                       return;
                     }
-                    // _guardarClientes(datos[0].clientes);
-                    // _guardarAlmacenes(datos[0].almacenes);
                     _guardarDatos(datos);
                   },
                   tooltip: "Guardar datos",
