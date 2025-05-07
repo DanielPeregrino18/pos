@@ -6,7 +6,7 @@ part 'Venta.g.dart';
 
 
 //La clase abstracta contiene nuestra declaracion de AP que queremos llamar.
-@RestApi(baseUrl: 'http://192.168.1.128:8080/api/')
+@RestApi(baseUrl: 'http://192.168.1.218:8080/api/')
 abstract class VentaApi {
   factory VentaApi(Dio dio, {String? baseUrl}) = _VentaApi;
 

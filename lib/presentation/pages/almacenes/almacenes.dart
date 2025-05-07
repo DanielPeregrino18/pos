@@ -36,7 +36,6 @@ class _AlmacenesState extends ConsumerState<Almacenes> {
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context).colorScheme;
-    final almacenes = ref.read(almacenesFiltradosProv);
 
     return Scaffold(
       appBar: GeneralAppBar(theme: theme, title: "Almacenes"),
@@ -67,6 +66,7 @@ class _AlmacenesState extends ConsumerState<Almacenes> {
                   }
                   ref.read(inputSearchProvider.notifier).state =
                       controller.value.text;
+                  final almacenes = ref.read(almacenesFiltradosProv);
                   return almacenes.map(
                     (almacenOB) => ListTile(
                       leading: Icon(
@@ -96,7 +96,7 @@ class _AlmacenesState extends ConsumerState<Almacenes> {
                         ],
                       ),
                       onTap: () {
-                        controller.clear();
+                        // controller.clear();
                         mostrarDetalles(context, almacenOB);
                       },
                     ),

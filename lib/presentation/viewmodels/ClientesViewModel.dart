@@ -11,8 +11,8 @@ class ClientesNotifier extends StateNotifier<List<ApiClientesResponse>> {
 
   Future<void> fetchClients(int idSucursal, int idCaja, String conn) async {
     try {
-      // final List<ApiClientesResponse> clientes = await _repositorioClientes
-      //     .getData(idSucursal, idCaja, conn);
+      final List<ApiClientesResponse> clientes = await _repositorioClientes
+          .getData(idSucursal, idCaja, conn);
 
       final List<Almacen> almacenes = [
         Almacen(5, "REFRI-GOMEZ", "REFRI-GOMEZ"),
@@ -82,9 +82,9 @@ class ClientesNotifier extends StateNotifier<List<ApiClientesResponse>> {
 
       final List<ApiClientesResponse> datosSimulados = [datos];
 
-      state = datosSimulados;
+      // state = datosSimulados;
 
-      // state = clientes;
+      state = clientes;
     } catch (e) {
       state = [];
       debugPrint('$e');

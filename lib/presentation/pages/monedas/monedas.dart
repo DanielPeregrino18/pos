@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:pos/domain/entities/cliente.dart';
-import 'package:pos/presentation/pages/clientes/widgets/detalles_cliente.dart';
-import 'package:pos/presentation/pages/clientes/widgets/lista_clientes.dart';
+import 'package:pos/domain/entities/moneda.dart';
+import 'package:pos/presentation/pages/monedas/widgets/detallles_moneda.dart';
+import 'package:pos/presentation/pages/monedas/widgets/lista_monedas.dart';
 import 'package:pos/presentation/widgets/general_app_bar.dart';
 import 'package:pos/presentation/widgets/drawer_pos.dart';
 import 'package:pos/presentation/viewmodels/general_data/general_data.dart';
 import 'package:pos/presentation/viewmodels/general_purpose.dart';
 
-class Clientes extends ConsumerStatefulWidget {
-  const Clientes({super.key});
+class Monedas extends ConsumerStatefulWidget {
+  const Monedas({super.key});
 
   @override
-  ConsumerState<Clientes> createState() => _ClientesState();
+  ConsumerState<Monedas> createState() => _MonedasState();
 }
 
-class _ClientesState extends ConsumerState<Clientes> {
+class _MonedasState extends ConsumerState<Monedas> {
   @override
   void initState() {
     super.initState();
@@ -26,10 +26,10 @@ class _ClientesState extends ConsumerState<Clientes> {
     super.dispose();
   }
 
-  void mostrarDetalles(BuildContext context, ClienteOB cliente) {
+  void mostrarDetalles(BuildContext context, MonedaOB moneda) {
     showDialog(
       context: context,
-      builder: (context) => DetallesCliente(cliente: cliente),
+      builder: (context) => DetallesMonedas(moneda: moneda),
     );
   }
 
@@ -38,7 +38,7 @@ class _ClientesState extends ConsumerState<Clientes> {
     var theme = Theme.of(context).colorScheme;
 
     return Scaffold(
-      appBar: GeneralAppBar(theme: theme, title: "Clientes"),
+      appBar: GeneralAppBar(theme: theme, title: "Monedas"),
       drawer: DrawerPos(),
       body: Align(
         alignment: Alignment.topCenter,
@@ -49,7 +49,7 @@ class _ClientesState extends ConsumerState<Clientes> {
               child: SearchAnchor.bar(
                 dividerColor: theme.primary,
                 viewBackgroundColor: theme.onPrimary,
-                barHintText: "Buscar cliente por RFC",
+                barHintText: "Buscar moneda por nombre",
                 viewConstraints: BoxConstraints(
                   minWidth: 550.0,
                   minHeight: 0,
@@ -66,13 +66,11 @@ class _ClientesState extends ConsumerState<Clientes> {
                   }
                   ref.read(inputSearchProvider.notifier).state =
                       controller.value.text;
-                  final clientes = ref.read(
-                    clientesFiltradosProv,
-                  );
-                  return clientes.map(
-                    (cliente) => ListTile(
+                  final monedas = ref.read(monedasFiltradasProv);
+                  return monedas.map(
+                    (moneda) => ListTile(
                       title: Text(
-                        'ID cliente: ${cliente.id_Cliente}',
+                        'ID moneda: ${moneda.IdMoneda}',
                         style: TextStyle(
                           fontSize: 20,
                           color: theme.primary,
@@ -83,25 +81,25 @@ class _ClientesState extends ConsumerState<Clientes> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "Razón Social: ${cliente.razon_Social}",
+                            "Nombre: ${moneda.Nombre}",
                             style: TextStyle(fontSize: 16),
                           ),
                           Text(
-                            "RFC: ${cliente.RFC}",
+                            "Clave SAT: ${moneda.Clave_SAT}",
                             style: TextStyle(fontSize: 16),
                           ),
                         ],
                       ),
                       onTap: () {
                         // controller.clear();
-                        mostrarDetalles(context, cliente);
+                        mostrarDetalles(context, moneda);
                       },
                     ),
                   );
                 },
               ),
             ),
-            Expanded(child: ListaClientes()),
+            Expanded(child: ListaMonedas()),
           ],
         ),
       ),

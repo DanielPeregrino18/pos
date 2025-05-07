@@ -51,6 +51,7 @@ class _DatosState extends ConsumerState<Datos> {
 
   _guardarAlmacenes(List<Almacen> almacenes) {
     if (almacenes.isNotEmpty) {
+      int i = 1;
       for (Almacen alm in almacenes) {
         AlmacenOB almacenOB = AlmacenOB(
           id_almacen: alm.id_almacen,
@@ -64,6 +65,8 @@ class _DatosState extends ConsumerState<Datos> {
           debugPrint(
             "Almacen no registrado, id_almacen duplicado: ${almacenOB.id_almacen}",
           );
+        } else {
+          debugPrint("Guardando almacenes...${i++}/${almacenes.length}");
         }
       }
     } else {
@@ -81,6 +84,7 @@ class _DatosState extends ConsumerState<Datos> {
 
   _guardarClientes(List<Cliente> clientes) {
     if (clientes.isNotEmpty) {
+      int i = 1;
       for (Cliente cliente in clientes) {
         ClienteOB clienteOB = ClienteOB(
           id_Cliente: cliente.id_Cliente,
@@ -98,6 +102,8 @@ class _DatosState extends ConsumerState<Datos> {
           debugPrint(
             "Cliente no registrado, id_Cliente duplicado: ${clienteOB.id_Cliente}",
           );
+        } else {
+          debugPrint("Guardando clientes...${i++}/${clientes.length}");
         }
       }
     } else {
@@ -160,6 +166,7 @@ class _DatosState extends ConsumerState<Datos> {
 
   _guardarDomicilios(List<Domicilio> domicilios) {
     if (domicilios.isNotEmpty) {
+      int i = 1;
       for (Domicilio domicilio in domicilios) {
         DomicilioOB domicilioOB = DomicilioOB(
           id_Cliente: domicilio.id_Cliente,
@@ -177,6 +184,8 @@ class _DatosState extends ConsumerState<Datos> {
 
         if (result == false) {
           debugPrint("Error: Precio no registrado");
+        } else {
+          debugPrint("Guardando domicilios...${i++}/${domicilios.length}");
         }
       }
     } else {
@@ -224,6 +233,9 @@ class _DatosState extends ConsumerState<Datos> {
   }
 
   void _guardarDatos(List<ApiClientesResponse> datos) {
+    setState(() {
+      isLoading = true;
+    });
     try {
       /*
       1. Almacenes
@@ -241,16 +253,17 @@ class _DatosState extends ConsumerState<Datos> {
 
       _guardarAlmacenes(datos[0].almacenes);
       _guardarPrioridades(datos[0].prioridades);
-      _guardarClientes(datos[0].clientes);
+      // _guardarClientes(datos[0].clientes);
       _guardarMonedas(datos[0].moneda);
       _guardarListaPrecios(datos[0].lista_precios);
       _guardarTipoEntrega(datos[0].tipo_entrega);
-      _guardarDomicilios(datos[0].domicilios);
+      // _guardarDomicilios(datos[0].domicilios);
       _guardarVendedores(datos[0].vendedores);
       _guardarCifras(datos[0].paridad, datos[0].idMovC, datos[0].idMovP);
     } catch (e) {
       debugPrint('$e');
     }
+    _isLoading();
   }
 
   @override
